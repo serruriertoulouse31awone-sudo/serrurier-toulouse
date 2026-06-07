@@ -1,0 +1,456 @@
+---
+import Icon from "./Icon.astro";
+import RatingStars from "./RatingStars.astro";
+import FinalCtaButton from "./FinalCtaButton.astro";
+import FaqSection from "./FaqSection.astro";
+import { createLocationFaq } from "@/data/faqContent";
+import { locations, mainLocation, type LocationConfig } from "@/data/locations";
+
+type Props = {
+  location?: LocationConfig;
+  allLocations?: LocationConfig[];
+};
+
+const { location = mainLocation, allLocations = locations } = Astro.props as Props;
+const faqItems = createLocationFaq(location);
+const [heroTitleBefore, heroTitleAfter = ""] = location.heroTitle.split("SERRURIER");
+const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location.city}`;
+---
+
+<div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner" role="navigation" aria-label="Navigation mobile">
+          <a href="#hero">Accueil</a>
+          <a href="#probleme">Situations</a>
+          <a href="#solution">Solution</a>
+          <a href="#methodes">Notre méthode</a>
+          <a href="#avis">Avis</a>
+          <a href="#faq">FAQ</a>
+          <a href="tel:+33767850787" class="btn-primary mobile-menu-cta"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler maintenant</a>
+          
+        </div>
+      </div>
+      
+      <header id="header">
+        <a href="#hero" class="header-logo">
+          <img src="/images/serrurier-toulouse.svg" alt="Serrurier Toulouse" width="158" height="38" />
+        </a>
+        <nav aria-label="Navigation principale"><ul class="header-nav">
+          <li><a href="#hero">Accueil</a></li>
+          <li><a href="#probleme">Situations</a></li>
+          <li><a href="#solution">Solution</a></li>
+          <li><a href="#methodes">Notre méthode</a></li>
+          <li><a href="#avis">Avis</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul></nav>
+        <div class="header-right">
+          <button class="burger-btn" id="burgerBtn" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+          <a href="tel:+33767850787" class="btn-primary btn-call-header"><Icon name="phone-call" class="button-icon" aria-hidden="true" />07 67 85 07 87</a>
+        </div>
+      </header>
+      
+      
+      <main id="main-content">
+      <section id="hero">
+        <div class="hero-inner">
+          <h1 class="hero-title">{heroTitleBefore}<span class="gold">SERRURIER</span>{heroTitleAfter}</h1>
+          <p class="hero-sub">Vous êtes <span class="gold">bloqué ?</span></p>
+          <p class="hero-tagline">On intervient partout {heroArea} et à toute heure <span class="violet">24h/24, 7j/7.</span></p>
+          <p class="hero-promise-text">{location.heroPromise}</p>
+          
+          <div class="hero-visual-frame hero-visual-mobile" id="heroVisualMobile">
+            <img src="/images/technicien-serrurier-toulouse-1920.webp" srcset="/images/technicien-serrurier-toulouse-960.webp 960w, /images/technicien-serrurier-toulouse-1920.webp 1920w" alt="Technicien Serrurier Toulouse" width={2508} height={1486} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
+            <div class="hero-play-btn" aria-hidden="true"></div>
+            <div class="hero-video-label"><div class="live-dot" aria-hidden="true"></div>Technicien disponible · {location.solutionArea}</div>
+          </div>
+          <div class="hero-cta-wrap" style="animation: fadeInUp .8s .35s both"><a href="tel:+33767850787" class="hero-cta-btn"><Icon name="phone-call" class="button-icon" aria-hidden="true" /><span class="cta-label">Appeler le 07 67 85 07 87</span></a></div>
+          <div class="hero-bottom">
+            <ul class="hero-checklist">
+              <li class="hero-check-item"><span class="hero-check-icon"><Icon name="check" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">100% de satisfaction</span></li>
+              <li class="hero-check-item"><span class="hero-check-icon"><Icon name="shield-check" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">Partenaire officiel de votre assurance</span></li>
+              <li class="hero-check-item"><span class="hero-check-icon"><Icon name="zap" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">Intervention rapide</span></li>
+            </ul>
+            <div class="hero-visual-frame" id="heroVisualFrame">
+              <img src="/images/technicien-serrurier-toulouse-1920.webp" srcset="/images/technicien-serrurier-toulouse-960.webp 960w, /images/technicien-serrurier-toulouse-1920.webp 1920w" alt="Technicien Serrurier Toulouse" width={2508} height={1486} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
+              <div class="hero-play-btn" aria-hidden="true"></div>
+              <div class="hero-video-label"><div class="live-dot" aria-hidden="true"></div>Technicien disponible · {location.solutionArea}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+      <section id="partenaires">
+        <div class="section-inner">
+          <p class="partenaires-label">Ils nous font confiance</p>
+        </div>
+        <div class="marquee-outer">
+          <div class="marquee-track">
+            <div class="marquee-item"><img src="/images/axa.svg" alt="AXA" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/maif.svg" alt="MAIF" class="partner-img" width="56" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/groupama.svg" alt="Groupama" class="partner-img" width="56" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/allianz.svg" alt="Allianz" class="partner-img" width="140" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/macif.svg" alt="Macif" class="partner-img" width="45" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/direct-assurance.svg" alt="Direct Assurance" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/mma.svg" alt="MMA" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/pacifica.svg" alt="Pacifica" class="partner-img" width="86" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/gmf.svg" alt="GMF" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/matmut.svg" alt="Matmut" class="partner-img" width="140" height="25" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/societe-generale.svg" alt="Société Générale" class="partner-img" width="140" height="27" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/axa.svg" alt="AXA" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/maif.svg" alt="MAIF" class="partner-img" width="56" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/groupama.svg" alt="Groupama" class="partner-img" width="56" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/allianz.svg" alt="Allianz" class="partner-img" width="140" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/macif.svg" alt="Macif" class="partner-img" width="45" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/direct-assurance.svg" alt="Direct Assurance" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/mma.svg" alt="MMA" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/pacifica.svg" alt="Pacifica" class="partner-img" width="86" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/gmf.svg" alt="GMF" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/matmut.svg" alt="Matmut" class="partner-img" width="140" height="25" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/societe-generale.svg" alt="Société Générale" class="partner-img" width="140" height="27" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/axa.svg" alt="AXA" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/maif.svg" alt="MAIF" class="partner-img" width="56" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/groupama.svg" alt="Groupama" class="partner-img" width="56" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/allianz.svg" alt="Allianz" class="partner-img" width="140" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/macif.svg" alt="Macif" class="partner-img" width="45" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/direct-assurance.svg" alt="Direct Assurance" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/mma.svg" alt="MMA" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/pacifica.svg" alt="Pacifica" class="partner-img" width="86" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/gmf.svg" alt="GMF" class="partner-img" width="44" height="44" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/matmut.svg" alt="Matmut" class="partner-img" width="140" height="25" loading="lazy" decoding="async" /></div>
+            <div class="marquee-item"><img src="/images/societe-generale.svg" alt="Société Générale" class="partner-img" width="140" height="27" loading="lazy" decoding="async" /></div>
+          </div>
+        </div>
+      </section>
+      
+      
+      <section id="probleme">
+        <div class="section-inner">
+          <div class="reveal">
+            <span class="section-tag">Vous vous reconnaissez ?</span>
+            <h2 class="section-title">VOTRE SITUATION<br /><span class="gold">MAINTENANT</span></h2>
+          </div>
+          <div class="probleme-flow">
+            <article class="probleme-case">
+              <div class="probleme-image-wrap">
+                <img src="/images/probleme-porte-claquee-460.webp" srcset="/images/probleme-porte-claquee-460.webp 460w, /images/probleme-porte-claquee.webp 1086w" alt="Porte claquée" width={1086} height={1448} sizes="(max-width: 991px) 320px, 460px" class="probleme-image" loading="lazy" decoding="async" />
+                <div class="probleme-image-overlay" />
+              </div>
+              <div class="probleme-copy">
+                <h3 class="prob-title">Porte claquée</h3>
+                <p class="prob-desc">Vous avez oublié vos clés à l'intérieur. Impossible d'entrer chez vous.</p>
+                <p class="prob-impact">Ne restez pas bloqué dehors.</p>
+              </div>
+            </article>
+            <article class="probleme-case probleme-case--reverse">
+              <div class="probleme-image-wrap">
+                <img src="/images/probleme-cles-perdues-460.webp" srcset="/images/probleme-cles-perdues-460.webp 460w, /images/probleme-cles-perdues.webp 1086w" alt="Clés perdues" width={1086} height={1448} sizes="(max-width: 991px) 320px, 460px" class="probleme-image" loading="lazy" decoding="async" />
+                <div class="probleme-image-overlay" />
+              </div>
+              <div class="probleme-copy">
+                <h3 class="prob-title">Clés perdues</h3>
+                <p class="prob-desc">Vos clés sont introuvables. La sécurité de votre domicile est compromise.</p>
+                <p class="prob-impact">Sécurisez votre accès sans attendre.</p>
+              </div>
+            </article>
+            <article class="probleme-case">
+              <div class="probleme-image-wrap">
+                <img src="/images/probleme-serrure-bloquee-460.webp" srcset="/images/probleme-serrure-bloquee-460.webp 460w, /images/probleme-serrure-bloquee.webp 1086w" alt="Serrure bloquée" width={1086} height={1448} sizes="(max-width: 991px) 320px, 460px" class="probleme-image" loading="lazy" decoding="async" />
+                <div class="probleme-image-overlay" />
+              </div>
+              <div class="probleme-copy">
+                <h3 class="prob-title">Serrure bloquée</h3>
+                <p class="prob-desc">La serrure ne répond plus. Ni de l'intérieur, ni de l'extérieur.</p>
+                <p class="prob-impact">Évitez les dégâts inutiles.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <section id="amplification">
+        <div class="section-inner">
+          <div class="reveal">
+            <span class="section-tag">Ce que vous ressentez</span>
+            <h2 class="section-title">CHAQUE MINUTE<br /><span class="gold">COMPTE</span></h2>
+          </div>
+          <div class="ampli-grid">
+            <div class="ampli-card reveal">
+              <h3>Attente interminable</h3>
+              <p>Un serrurier qui ne répond pas, des délais impossibles à tenir. Pendant ce temps, vous restez bloqué.</p>
+            </div>
+            <div class="ampli-card reveal">
+              <h3>Stress &amp; urgence</h3>
+              <p>Enfants à l'intérieur, sécurité du domicile exposée, rendez-vous manqué. L'urgence monte.</p>
+            </div>
+            <div class="ampli-card reveal">
+              <h3>Tarifs imprévus</h3>
+              <p>Un devis flou, une facture finale incompréhensible. Des frais que vous n'aviez pas anticipés.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+      <div class="cta-band" style="width: min(92%, 1300px); margin: 50px auto; border-radius: 28px; box-shadow: 0 18px 50px rgba(80,32,184,.18); overflow: hidden"><div class="cta-band-text">BLOQUÉ DEHORS ? <span class="cta-inline-arrow" aria-hidden="true" /> ON ARRIVE.</div><a href="tel:+33767850787" class="btn-white"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler le 07 67 85 07 87</a></div>
+      
+      
+      
+      
+      
+      <section id="solution">
+        <div class="section-inner">
+          <div class="solution-inner">
+            <div class="reveal">
+              <span class="section-tag">La réponse</span>
+              <h2 class="section-title">ON RÉPOND<br /><span class="gold">EN MOINS DE 5 MIN</span></h2>
+              <p class="location-section-text">{location.reassuranceText}</p>
+              <ul class="solution-list">
+                <li><span class="dot"></span>Intervention rapide, sans attente</li>
+                <li><span class="dot"></span>Disponible 24h/24 – 7j/7, même la nuit</li>
+                <li><span class="dot"></span>{location.solutionArea}</li>
+                <li><span class="dot"></span>Technicien certifié, matériel professionnel</li>
+                <li><span class="dot"></span>Intervention sans casse si possible</li>
+              </ul>
+            </div>
+            <a href="tel:+33767850787" class="solution-graphic reveal" aria-label="Appeler le serrurier maintenant">
+        <img src="/images/serrurier-en-intervention-a-toulouse.png" alt={`Serrurier en intervention à ${location.city}`} width={2578} height={1526} sizes="(max-width: 991px) 90vw, 44vw" class="solution-graphic-img" loading="lazy" decoding="async" />
+        <div class="solution-graphic-overlay">
+          <span class="sol-icon" aria-hidden="true"><span class="lock-closed"><Icon name="lock-keyhole" class="landing-icon" aria-hidden="true" /></span><span class="lock-open"><Icon name="unlock" class="landing-icon" aria-hidden="true" /></span></span>
+          <div class="sol-text">INTERVENTION RAPIDE<br />{location.solutionArea.toUpperCase()}</div>
+          <span class="sol-badge">Disponible maintenant →</span>
+        </div>
+      </a>
+          </div>
+        </div>
+      </section>
+      
+      
+      <section id="resultats" style="margin: 50px 0; padding: 40px 0">
+        <div class="resultats-grid section-inner" style="padding: 0 5%">
+          <div class="resultat-item reveal"><span class="resultat-num">30'</span><div class="resultat-label">Intervention</div><div class="resultat-sub">Temps moyen en moins de</div></div>
+          <div class="resultat-item reveal"><span class="resultat-num">24/7</span><div class="resultat-label">Disponibilité</div><div class="resultat-sub">Nuits, week-ends & jours fériés</div></div>
+          <div class="resultat-item reveal"><span class="resultat-num">0€</span><div class="resultat-label">Frais cachés</div><div class="resultat-sub">Tarif annoncé avant intervention</div></div>
+        </div>
+      </section>
+      
+      
+      <section id="methodes">
+        <div class="section-inner">
+          <div class="reveal" style="text-align: center">
+            <span class="section-tag">Notre méthode</span>
+            <h2 class="section-title">4 ÉTAPES,<br /><span class="gold">C'EST TOUT</span></h2>
+          </div>
+          <div class="steps timeline-steps">
+            <div class="timeline-line" aria-hidden="true">
+              <div class="timeline-progress" />
+            </div>
+            <article class="step-card timeline-step reveal">
+              <div class="step-num">1</div>
+              <div class="step-img-wrap">
+                <img src="/images/vous-appelez.png" alt="Vous appelez" width={2630} height={1520} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+              </div>
+              <div class="step-card-body">
+                <h3>Vous appelez</h3>
+                <p>Un technicien décroche immédiatement. Vous décrivez votre situation en 30 secondes.</p>
+              </div>
+            </article>
+            <article class="step-card timeline-step reveal">
+              <div class="step-num">2</div>
+              <div class="step-img-wrap">
+                <img src="/images/on-annonce-le-prix.png" alt="On annonce le prix" width={2334} height={1518} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+              </div>
+              <div class="step-card-body">
+                <h3>On annonce le prix</h3>
+                <p>Tarif fixe communiqué au téléphone avant de se déplacer. Aucune surprise possible.</p>
+              </div>
+            </article>
+            <article class="step-card timeline-step reveal">
+              <div class="step-num">3</div>
+              <div class="step-img-wrap">
+                <img src="/images/intervention-rapide.png" alt="Intervention rapide" width={2580} height={1526} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+              </div>
+              <div class="step-card-body">
+                <h3>Intervention rapide</h3>
+                <p>Notre technicien arrive en moins de 30 minutes et règle le problème sur place.</p>
+              </div>
+            </article>
+            <article class="step-card timeline-step reveal">
+              <div class="step-num">4</div>
+              <div class="step-img-wrap">
+                <img src="/images/serrurier-en-intervention-a-toulouse.png" alt="Votre porte est ouverte" width={2578} height={1526} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+              </div>
+              <div class="step-card-body">
+                <h3>Votre porte est ouverte !</h3>
+                <p>Vous retrouvez l'accès à votre domicile, avec une intervention propre et une situation résolue.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      
+      
+      <section id="avis">
+        <div class="section-inner">
+          <div class="section-inner">
+          <div class="avis-header reveal">
+            <div>
+              <span class="section-tag">Témoignages clients</span>
+              <h2 class="section-title">CE QU'ILS<br /><span class="gold">EN DISENT</span></h2>
+            </div>
+            <div class="avis-score">
+              <div>
+                <div class="avis-big-score">—</div>
+                <RatingStars class="avis-stars" />
+                <div class="avis-count">Avis à venir</div>
+              </div>
+              <div class="avis-google-badge">
+                <Icon name="check" class="badge-icon" aria-hidden="true" /> Avis à venir
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="avis-marquee-outer">
+            <div class="avis-marquee-track" id="avisMarqueeTrack">
+              <div class="avis-card"><div class="avis-top"><div class="avis-avatar">C1</div><div><div class="avis-name">Client n°1</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C2</div><div><div class="avis-name">Client n°2</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C3</div><div><div class="avis-name">Client n°3</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C4</div><div><div class="avis-name">Client n°4</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C5</div><div><div class="avis-name">Client n°5</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C6</div><div><div class="avis-name">Client n°6</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C1</div><div><div class="avis-name">Client n°1</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C2</div><div><div class="avis-name">Client n°2</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C3</div><div><div class="avis-name">Client n°3</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C4</div><div><div class="avis-name">Client n°4</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C5</div><div><div class="avis-name">Client n°5</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C6</div><div><div class="avis-name">Client n°6</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C1</div><div><div class="avis-name">Client n°1</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C2</div><div><div class="avis-name">Client n°2</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C3</div><div><div class="avis-name">Client n°3</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C4</div><div><div class="avis-name">Client n°4</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C5</div><div><div class="avis-name">Client n°5</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C6</div><div><div class="avis-name">Client n°6</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+      
+      
+      
+      <section id="usp">
+        <div class="section-inner">
+          <div class="usp-heading reveal" style="text-align: center">
+            <span class="section-tag">Pourquoi nous faire confiance</span>
+            <h2 class="section-title">CE QUI NOUS<br /><span class="gold">DIFFÉRENCIE</span></h2>
+            <div class="usp-mini-lock" aria-hidden="true">
+              <span class="usp-mini-lock-trace"></span>
+              <svg class="usp-mini-lock-svg" viewBox="0 0 32 36">
+                <path class="usp-mini-lock-shackle" d="M9 16v-5.5C9 5.8 12.2 2.5 16 2.5s7 3.3 7 8V18.5" />
+                <rect class="usp-mini-lock-body" x="6" y="14" width="20" height="19" rx="4" />
+                <path class="usp-mini-lock-hole" d="M16 21v7" />
+              </svg>
+            </div>
+          </div>
+          <div class="usp-cards-window">
+            <div class="usp-grid">
+              <div class="usp-card reveal"><span class="usp-icon"><Icon name="timer" class="landing-icon" aria-hidden="true" /></span><div class="usp-card-copy"><h3>Intervention rapide</h3><p>Moins de 30 minutes en moyenne sur Toulouse</p></div></div>
+              <div class="usp-card reveal"><span class="usp-icon"><Icon name="euro" class="landing-icon" aria-hidden="true" /></span><div class="usp-card-copy"><h3>Prix transparents</h3><p>Tarif annoncé avant toute intervention. Toujours.</p></div></div>
+              <div class="usp-card reveal"><span class="usp-icon"><Icon name="shield-check" class="landing-icon" aria-hidden="true" /></span><div class="usp-card-copy"><h3>Aucun frais caché</h3><p>La facture finale = le devis annoncé. Rien de plus.</p></div></div>
+              <div class="usp-card reveal"><span class="usp-icon"><Icon name="user-round-check" class="landing-icon" aria-hidden="true" /></span><div class="usp-card-copy"><h3>Serruriers certifiés</h3><p>Techniciens formés, expérimentés et assurés</p></div></div>
+              <div class="usp-card reveal"><span class="usp-icon"><Icon name="moon" class="landing-icon" aria-hidden="true" /></span><div class="usp-card-copy"><h3>Nuit & week-end</h3><p>On ne ferme jamais. Même à 3h du matin.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </section><section id="reassurance">
+        <div class="section-inner">
+          <div class="reveal" style="text-align: center">
+            <span class="section-tag">Nos garanties</span>
+            <h2 class="section-title">VOTRE<br /><span class="gold">TRANQUILLITÉ</span></h2>
+          </div>
+          <div class="reassurance-grid">
+            <div class="reas-item reveal"><span class="reas-icon"><Icon name="clipboard-list" class="landing-icon" aria-hidden="true" /></span><span class="reas-label">Devis avant<br />intervention</span></div>
+            <div class="reas-item reveal"><span class="reas-icon"><Icon name="hand" class="landing-icon" aria-hidden="true" /></span><span class="reas-label">Aucun<br />engagement</span></div>
+            <div class="reas-item reveal"><span class="reas-icon"><Icon name="credit-card" class="landing-icon" aria-hidden="true" /></span><span class="reas-label">Paiement<br />sécurisé</span></div>
+            <div class="reas-item reveal"><span class="reas-icon"><Icon name="hospital" class="landing-icon" aria-hidden="true" /></span><span class="reas-label">Agréé<br />assurances</span></div>
+            <div class="reas-item reveal"><span class="reas-icon"><Icon name="wrench" class="landing-icon" aria-hidden="true" /></span><span class="reas-label">Intervention<br />professionnelle</span></div>
+          </div>
+        </div>
+      </section>
+      
+      
+      <div id="cta-band-2" style="width: min(92%, 1300px); margin: 50px auto; border-radius: 28px; box-shadow: 0 18px 50px rgba(80,32,184,.18); overflow: visible"><div class="cta-band-2-text">TECHNICIEN DISPONIBLE <span class="cta-inline-arrow" aria-hidden="true" /> MAINTENANT</div><a href="tel:+33767850787" class="btn-white"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler le 07 67 85 07 87</a></div>
+      
+      
+      <section id="urgence">
+        <div class="section-inner">
+          <div class="reveal" style="text-align: center">
+            <span class="section-tag">Agissez maintenant</span>
+            <h2 class="section-title">CHAQUE SECONDE<br /><span class="gold">COMPTE</span></h2>
+          </div>
+          <div class="urgence-inner">
+            <div class="urgence-card reveal"><div class="urgence-icon"><Icon name="user-round-check" class="landing-icon" aria-hidden="true" /></div><h3>Technicien dispo</h3><p>Un technicien est disponible dans votre secteur en ce moment même.</p></div>
+            <div class="urgence-card reveal"><div class="urgence-icon"><Icon name="map-pin" class="landing-icon" aria-hidden="true" /></div><h3>Zone active</h3><p>{location.urgencyZoneText}</p></div>
+            <div class="urgence-card reveal"><div class="urgence-icon"><Icon name="timer" class="landing-icon" aria-hidden="true" /></div><h3>Temps moyen</h3><p>Nos clients attendent en moyenne 28 minutes entre l'appel et la résolution complète.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <FaqSection items={faqItems} title="FAQ" highlightedTitle={location.city.toUpperCase()} intro={location.reassuranceText} />
+
+      <section id="cta-final">
+        <div class="cta-final-inner">
+          <h2 class="cta-final-title reveal">FINI<br /><span class="gold-light">L'ATTENTE.</span></h2>
+          <p class="cta-final-sub reveal">Intervention rapide 24h/24 – {location.solutionArea}</p>
+          <div class="cta-final-actions">
+            <a href="tel:+33767850787" class="cta-final-phone reveal">07&nbsp;67&nbsp;85&nbsp;07&nbsp;87</a>
+            <FinalCtaButton />
+            <p class="cta-rappel reveal">Prix annoncé avant intervention · Zéro surprise</p>
+          </div>
+        </div>
+      </section>
+      </main>
+      
+      
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo"><img src="/images/serrurier-toulouse-2.svg" alt="Serrurier Toulouse" width="133" height="32" /></div>
+            <p>{location.reassuranceText}</p>
+          </div>
+          <div class="footer-col">
+            <h3>Zones</h3>
+            <ul>
+              {allLocations.map((footerLocation) => (
+                <li><a href={footerLocation.url}>{footerLocation.footerLabel}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Légal</h3>
+            <ul><li><a href="/mentions-legales.html">Mentions légales</a></li><li><a href="tel:+33767850787">Contact</a></li></ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Serrurier Toulouse – Tous droits réservés</span>
+        </div>
+      </footer>
+      <a
+        href="#hero"
+        class="back-to-top back-to-top--dark back-to-top-desktop"
+        aria-label="Revenir en haut de page"
+        style="background: #222222; color: #ffffff; border: none; box-shadow: none"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" class="back-to-top-icon">
+          <path d="M12 19V5" />
+          <path d="M5 12l7-7 7 7" />
+        </svg>
+      </a>
+      <a
+        href="tel:+33767850787"
+        class="back-to-top mobile-floating-call"
+        aria-label="Appeler le 07 67 85 07 87"
+      >
+        <Icon name="phone" class="floating-call-icon" aria-hidden="true" />
+      </a>
+
+<script>
+  import "@/scripts/landing";
+</script>
+
+

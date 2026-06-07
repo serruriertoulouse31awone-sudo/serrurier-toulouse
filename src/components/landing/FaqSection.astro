@@ -1,0 +1,72 @@
+---
+import Icon from "./Icon.astro";
+import type { FaqItem } from "@/data/faqContent";
+
+type Props = {
+  items: FaqItem[];
+  eyebrow?: string;
+  title?: string;
+  highlightedTitle?: string;
+  intro?: string;
+};
+
+const {
+  items,
+  eyebrow = "Serrurier Toulouse",
+  title = "QUESTIONS",
+  highlightedTitle = "FRÉQUENTES",
+  intro = "Les réponses essentielles avant une intervention : prix, urgence, zones couvertes et transparence.",
+} = Astro.props as Props;
+---
+
+{items.length > 0 && (
+  <section id="faq">
+    <div class="section-inner">
+      <div class="faq-heading">
+        <span class="section-tag">{eyebrow}</span>
+        <h2 class="section-title">
+          {title}
+          <br />
+          <span class="gold">{highlightedTitle}</span>
+        </h2>
+        <p class="faq-intro">{intro}</p>
+      </div>
+
+      <div class="faq-list">
+        {items.map((item, index) => {
+          const isOpen = index === 0;
+          const questionId = `faq-question-${index}`;
+          const answerId = `faq-answer-${index}`;
+
+          return (
+            <article class="faq-item" data-open={String(isOpen)}>
+              <h3 class="faq-question-title">
+                <button
+                  type="button"
+                  class="faq-question"
+                  aria-expanded={String(isOpen)}
+                  aria-controls={answerId}
+                  id={questionId}
+                  data-faq-index={String(index)}
+                >
+                  <span class="faq-question-content">
+                    <span class="faq-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span>{item.question}</span>
+                  </span>
+                  <Icon name="chevron-down" class="faq-icon" aria-hidden="true" />
+                </button>
+              </h3>
+              <div class="faq-answer" id={answerId} role="region" aria-labelledby={questionId} aria-hidden={String(!isOpen)}>
+                <div class="faq-answer-inner">
+                  <p>{item.answer}</p>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}

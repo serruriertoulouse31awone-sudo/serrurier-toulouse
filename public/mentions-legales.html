@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions légales – Serrurier Toulouse</title>
+<meta name="description" content="Mentions légales du site serruriertoulouse.fr : éditeur, hébergeur, propriété intellectuelle, données personnelles.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://serruriertoulouse.fr/mentions-legales.html">
+<link rel="icon" type="image/svg+xml" href="images/serrurier-toulouse.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --bg-grad: linear-gradient(180deg, #F9F9F9 0%, #EFE3FB 25%, #F4ECFC 55%, #FFF8DC 100%);
+    --violet-mid:   #844DFB;
+    --violet-deep:  #5020b8;
+    --violet-dark:  #1a0d2e;
+    --violet-text:  #3d2a5c;
+    --gold: #FFBE00;
+    
+    --card-bg:      rgba(255,255,255,0.65);
+    --card-border:  rgba(132,77,251,0.18);
+    --font-title:   'Bebas Neue', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;  /* = header 80px + 20px de marge confort */
+    background: var(--bg-grad);
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    min-height: 100%;
+  }
+  body {
+    
+    
+    font-family: var(--font-body);
+    background: transparent;
+    color: var(--violet-dark);
+    overflow-x: hidden;
+    min-height: 100vh;
+  
+  
+  }
+
+  /* ── HEADER ── */
+  #header {
+    position: fixed; top:0; left:0; right:0; z-index:1200;
+    background: rgba(249,249,249,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(132,77,251,0.2);
+    padding: 0 5%; height:80px;
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2rem;
+    animation: slideDown 0.6s ease; transition: height 0.3s;
+  }
+  .header-logo { flex-shrink:0; line-height:0; }
+  .header-logo img { height:42px; display:block; }
+
+  /* Nav desktop — flex centré dans l'espace disponible
+     entre le logo et le bouton, évite tout chevauchement */
+  .header-nav {
+    display: flex; flex-direction: row;
+    align-items: center; justify-content: center;
+    gap: 2rem; list-style: none;
+    padding: 0;
+    min-width: 0;  /* permet aux items de se réduire si nécessaire */
+  }
+  .header-nav li { display: block; }
+  .header-nav a {
+    text-decoration: none;
+    color: var(--violet-text);
+    font-size: 1rem; font-weight: 600;
+    letter-spacing: .06em; text-transform: uppercase;
+    transition: color .2s; white-space: nowrap;
+  }
+  .header-nav a:hover { color: var(--violet-mid); }
+
+  /* Droite : burger (caché desktop) + bouton */
+  .header-right {
+    display: flex; flex-direction: row;
+    align-items: center; gap: 1.5rem;
+    flex-shrink: 0; flex-wrap: nowrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--violet-mid), var(--violet-deep));
+    color:#fff; border:none; padding:.95rem 1.8rem; border-radius:8px;
+    font-family:var(--font-body); font-weight:700; font-size:1rem;
+    letter-spacing:.04em; text-transform:uppercase; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:.5rem; transition:all .2s;
+    box-shadow: 0 4px 20px rgba(132,77,251,.35);
+  }
+  .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 30px rgba(132,77,251,.5); }
+
+  /* ── SECTION GÉNÉRIQUE ── */
+  section { position:relative; }
+  .section-inner { max-width:1300px; margin:0 auto; padding:0 clamp(16px, 5%, 64px); width: 100%; }
+  .section-tag {
+    display:inline-block; font-size:.7rem; font-weight:700;
+    letter-spacing:.15em; text-transform:uppercase;
+    color:var(--violet-mid); background:rgba(132,77,251,.08);
+    border:1px solid rgba(132,77,251,.3);
+    padding:.3rem .9rem; border-radius:3px; margin-bottom:1rem;
+  }
+  .section-title { font-family:var(--font-title); font-size:clamp(2.4rem,4vw,4rem); line-height:1; letter-spacing:2px; margin-bottom:1rem; color:var(--violet-dark); }
+  .section-title .gold { color:var(--gold); }
+  .gold { color:var(--gold); }
+
+  /* ── HERO ── */
+  #hero { min-height:auto; padding:100px 0 0; display:flex; align-items:flex-start; position:relative; }
+  /* #hero::before retiré — créait une coupure violette à la fin du hero */
+  .hero-inner {
+    position:relative; z-index:1; width:100%; max-width:1300px; margin:0 auto;
+    padding:3.5rem 5% 2.5rem; display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .hero-title { font-family:var(--font-title); font-size:clamp(3rem,7vw,6.5rem); line-height:1; letter-spacing:3px; text-transform:uppercase; margin-bottom:1.5rem; color:var(--violet-dark); animation:fadeInUp .8s .1s both; }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  .hero-sub { font-size:clamp(1.4rem,3vw,2.2rem); font-weight:700; color:var(--violet-dark); margin-bottom:.5rem; animation:fadeInUp .8s .2s both; }
+  .hero-tagline { font-size:clamp(1rem,2vw,1.5rem); font-weight:700; color:var(--violet-text); margin-bottom:.5rem; animation:fadeInUp .8s .25s both; }
+  .hero-tagline .violet { color:var(--violet-mid); }
+  .hero-promise-text { font-size:.95rem; color:var(--violet-text); margin-bottom:2.5rem; animation:fadeInUp .8s .3s both; }
+  .hero-cta-btn {
+    display:inline-flex; align-items:center;
+    background:linear-gradient(135deg,var(--violet-mid),var(--violet-deep));
+    color:#fff; border:none; padding:1.1rem 2.8rem; border-radius:40px;
+    font-family:var(--font-body); font-weight:700; font-size:1rem;
+    cursor:pointer; text-decoration:none;
+    box-shadow:0 6px 40px rgba(132,77,251,.45);
+    animation:heroPulse 3s 1s ease-in-out infinite;
+    transition:transform .5s cubic-bezier(.25,.46,.45,.94), box-shadow .5s ease, color .5s ease;
+    margin-bottom:0;
+    position:relative;
+  }
+  /* Overlay doré en ::before — glisse en opacité */
+  .hero-cta-btn::before {
+    content:'';
+    position:absolute; inset:0;
+    border-radius:inherit;
+    background:linear-gradient(135deg,#FFBE00,#e0a800);
+    opacity:0;
+    transition:opacity .6s cubic-bezier(.25,.46,.45,.94);
+    z-index:0;
+    pointer-events:none;
+  }
+  .hero-cta-btn:hover::before { opacity:1; }
+  /* Texte toujours au-dessus */
+  .hero-cta-btn .cta-label {
+    position:relative; z-index:1;
+    transition:color .5s ease;
+  }
+  @keyframes heroPulse { 0%,100%{box-shadow:0 6px 40px rgba(132,77,251,.4)} 50%{box-shadow:0 6px 60px rgba(132,77,251,.7)} }
+  .hero-cta-btn:hover {
+    transform:scale(1.05) translateY(-2px);
+    box-shadow:0 12px 50px rgba(255,190,0,.4), 0 0 0 3px rgba(255,190,0,.18);
+    animation:none;
+  }
+  .hero-cta-btn:hover .cta-label { color:#1a0d2e; }
+  .hero-bottom { width:100%; display:grid; grid-template-columns:1fr 1.6fr; gap:2rem; align-items:center; animation:fadeInUp .8s .45s both; }
+  .hero-checklist { list-style:none; display:flex; flex-direction:column; gap:1rem; text-align:left; }
+  .hero-check-item { display:flex; align-items:center; gap:1rem; font-size:1.05rem; font-weight:600; color:var(--violet-dark); }
+  .hero-check-icon {
+    width:32px; height:32px; border-radius:50%;
+    background:linear-gradient(135deg,var(--violet-mid),var(--violet-deep));
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; font-size:.8rem; color:#fff;
+    box-shadow:0 2px 12px rgba(132,77,251,.4);
+  }
+  .hero-visual-frame {
+    position:relative; border-radius:20px; overflow:hidden;
+    border:none;
+    box-shadow:0 12px 60px rgba(132,77,251,.2), 0 24px 80px rgba(0,0,0,.12);
+    aspect-ratio:16/9;
+    background:linear-gradient(135deg,#2a1060 0%,#1a0d2e 50%,#2a0850 100%);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .hero-visual-img {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:center top;
+    opacity:0.55; z-index:0;
+  }
+  /* Mobile duplicate — caché sur desktop */
+  .hero-visual-mobile {
+    display:none;
+    width:100%; max-width:480px;
+    margin-bottom:2rem;
+  }
+  .hero-visual-frame::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 60% 40%,rgba(132,77,251,.2) 0%,transparent 60%); z-index:1; }
+  .hero-play-btn {
+    position:relative; z-index:2; width:72px; height:72px;
+    background:var(--violet-mid); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 40px rgba(132,77,251,.6);
+    animation:breathe 3s ease-in-out infinite;
+    transition:background .3s ease, transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s ease;
+    cursor:pointer;
+  }
+  /* Anneau d'éclat au hover */
+  .hero-play-btn::before {
+    content:''; position:absolute; inset:-4px;
+    border-radius:50%;
+    border:2px solid transparent;
+    background:linear-gradient(135deg, var(--gold), var(--violet-mid)) border-box;
+    -webkit-mask:linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:destination-out;
+    mask-composite:exclude;
+    opacity:0; transition:opacity .3s ease, transform .3s ease;
+    transform:scale(.85);
+  }
+  .hero-visual-frame:hover .hero-play-btn::before,
+  .hero-play-btn:hover::before {
+    opacity:1; transform:scale(1);
+  }
+  .hero-visual-frame:hover .hero-play-btn,
+  .hero-play-btn:hover {
+    background:var(--gold);
+    transform:scale(1.18);
+    box-shadow:0 0 0 8px rgba(255,190,0,.2), 0 0 50px rgba(255,190,0,.5);
+    animation:none;
+  }
+  @keyframes breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+  .hero-play-btn::after {
+    content:''; border-style:solid;
+    border-width:12px 0 12px 22px;
+    border-color:transparent transparent transparent #fff;
+    margin-left:4px;
+    position:relative; z-index:1;
+    transition:border-color .3s ease;
+  }
+  .hero-visual-frame:hover .hero-play-btn::after,
+  .hero-play-btn:hover::after {
+    border-color:transparent transparent transparent var(--violet-dark);
+  }
+  .hero-video-label {
+    position:absolute; bottom:0; left:0; right:0;
+    background:rgba(0,0,0,.55); backdrop-filter:blur(8px);
+    padding:.75rem 1.2rem; display:flex; align-items:center; gap:.6rem;
+    z-index:2; font-size:.82rem; font-weight:600; color:#F9F9F9;
+  }
+  .live-dot { width:8px; height:8px; background:var(--gold); border-radius:50%; animation:pulse 1.5s infinite; flex-shrink:0; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,190,0,.7)} 50%{box-shadow:0 0 0 6px rgba(255,190,0,0)} }
+
+  /* ── PROBLÈME — fond neutre (dégradé principal) ── */
+  #probleme { padding:4rem 0; }
+  .probleme-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+  .probleme-card {
+    background:var(--card-bg); border:1.5px solid var(--card-border);
+    border-radius:12px; padding:2.5rem 2rem; text-align:center;
+    transition:transform .3s,border-color .3s; box-shadow:0 2px 16px rgba(132,77,251,.07);
+  }
+  .probleme-card:hover { border-color:rgba(132,77,251,.4); transform:translateY(-5px); }
+  .prob-icon { font-size:3rem; margin-bottom:1rem; display:block; }
+  .prob-title { font-family:var(--font-title); font-size:1.6rem; letter-spacing:1px; margin-bottom:.5rem; color:var(--violet-dark); }
+  .prob-desc { font-size:.9rem; line-height:1.6; color:var(--violet-text); }
+  /* Icônes de réassurance en jaune */
+  .prob-icon-gold { color:var(--gold); }
+
+  /* ── AVIS SLIDER — cartes violettes ── */
+  #avis { padding:4rem 0; overflow-x:hidden; }
+  .avis-header { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; margin-bottom:3rem; }
+  .avis-big-score { font-family:var(--font-title); font-size:5rem; line-height:1; color:var(--gold); }
+  .avis-stars { display:flex; gap:.2rem; font-size:1.5rem; }
+  .avis-count { font-size:.85rem; color:var(--violet-text); margin-top:.2rem; }
+  .avis-score { display:flex; align-items:center; gap:1.5rem; }
+  .avis-google-badge {
+    display:flex; align-items:center; gap:.5rem;
+    background:rgba(132,77,251,.06); border:1px solid rgba(132,77,251,.2);
+    padding:.5rem 1rem; border-radius:50px; font-size:.8rem; color:var(--violet-text);
+  }
+  .slider-outer { overflow:hidden; position:relative; width:100vw; margin-left:calc(-50vw + 50%); padding:0; }
+  .slider-track { display:flex; gap:1.5rem; cursor:grab; user-select:none; will-change:transform; padding:0 1.5rem; }
+  .slider-track:active { cursor:grabbing; }
+  /* CARTES VIOLETTES */
+  .avis-card {
+    background:linear-gradient(135deg,var(--violet-mid),var(--violet-deep));
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:14px; padding:2rem; flex:0 0 320px;
+    transition:border-color .3s,transform .2s;
+    box-shadow:0 4px 24px rgba(132,77,251,.3);
+  }
+  .avis-card:hover { transform:translateY(-4px); box-shadow:0 8px 36px rgba(132,77,251,.45); }
+  .avis-top { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+  .avis-avatar {
+    width:44px; height:44px; border-radius:50%;
+    background:rgba(255,255,255,.2); border:1.5px solid rgba(255,255,255,.35);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-title); font-size:1.2rem; color:#fff; flex-shrink:0;
+  }
+  .avis-name { font-weight:700; font-size:.95rem; color:#fff; }
+  .avis-date { font-size:.72rem; color:rgba(255,255,255,.6); }
+  .avis-stars-sm { display:flex; gap:.12rem; font-size:.85rem; margin-top:.2rem; }
+  .avis-text { font-size:.88rem; color:rgba(255,255,255,.85); line-height:1.65; }
+  .avis-verified { font-size:.72rem; color:rgba(255,255,255,.5); margin-top:1rem; font-weight:600; display:flex; align-items:center; gap:.4rem; }
+  .slider-controls { display:flex; gap:1rem; margin-top:2rem; justify-content:center; padding:0 5%; }
+  .slider-btn {
+    width:44px; height:44px; border-radius:50%;
+    border:1px solid rgba(132,77,251,.3); background:rgba(132,77,251,.06);
+    color:var(--violet-mid); font-size:1.1rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:all .2s;
+  }
+  .slider-btn:hover { background:var(--violet-mid); border-color:var(--violet-mid); color:#fff; }
+
+
+  /* ── MARQUEE AVIS — défilement infini, ne s'arrête jamais ── */
+  .avis-marquee-outer { overflow:hidden; position:relative; width:100vw; margin-left:calc(-50vw + 50%); padding:2.5rem 0 3rem; }
+  .avis-marquee-outer::before,
+  .avis-marquee-outer::after { content:''; position:absolute; top:0; bottom:0; width:60px; z-index:2; pointer-events:none; }
+  .avis-marquee-outer::before { left:0; background:linear-gradient(to right, rgba(249,249,249,0.95), transparent); }
+  .avis-marquee-outer::after  { right:0; background:linear-gradient(to left, rgba(249,249,249,0.95), transparent); }
+  .avis-marquee-track {
+    display:flex; gap:1.5rem; width:max-content;
+    animation: avis-scroll 60s linear infinite;
+    padding:0 .75rem;
+  }
+  .avis-marquee-track:hover { animation-play-state: paused; }
+  @keyframes avis-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-33.333%); }
+  }
+
+  /* ── RÉSULTATS — violet plein ── */
+  #resultats { background:linear-gradient(135deg,var(--violet-mid) 0%,var(--violet-deep) 100%); padding:4rem 0; }
+  .resultats-grid { display:grid; grid-template-columns:repeat(3,1fr); }
+  .resultat-item { padding:3rem 2rem; text-align:center; border-right:1px solid rgba(255,255,255,.2); }
+  .resultat-item:last-child { border-right:none; }
+  .resultat-num { font-family:var(--font-title); font-size:clamp(4rem,7vw,7rem); line-height:1; letter-spacing:2px; color:var(--gold); display:block; }
+  .resultat-label { font-size:1rem; font-weight:700; color:rgba(255,255,255,.95); text-transform:uppercase; letter-spacing:.1em; margin-top:.3rem; }
+  .resultat-sub { font-size:.75rem; color:rgba(255,255,255,.65); margin-top:.3rem; }
+
+  /* ── AMPLIFICATION ── */
+  #amplification { padding:4rem 0; }
+  .ampli-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:3rem; }
+  .ampli-card {
+    border-left:3px solid var(--violet-mid);
+    padding:1.5rem;
+    background:rgba(132,77,251,.04);
+    border-radius:0 8px 8px 0;
+  }
+  .ampli-card h3 { font-family:var(--font-title); font-size:1.5rem; letter-spacing:1px; margin-bottom:.5rem; color:var(--violet-mid); }
+  .ampli-card p { font-size:.9rem; color:var(--violet-text); line-height:1.6; }
+
+
+  /* ── SOLUTION ── */
+  #solution { padding:4rem 0; }
+  .solution-inner { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+  .solution-list { list-style:none; margin-top:2rem; display:flex; flex-direction:column; gap:1.2rem; }
+  .solution-list li { display:flex; align-items:center; gap:1rem; font-size:1rem; color:var(--violet-dark); }
+  .solution-list .dot { width:10px; height:10px; background:var(--violet-mid); border-radius:50%; flex-shrink:0; box-shadow:0 0 8px rgba(132,77,251,.4); }
+  a.solution-graphic { text-decoration:none; color:inherit; display:flex; }
+  .solution-graphic {
+    position:relative; border-radius:16px; overflow:hidden;
+    border:2px solid rgba(132,77,251,.25);
+    box-shadow:0 4px 40px rgba(132,77,251,.15);
+    aspect-ratio:4/3; cursor:pointer;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .solution-graphic-img {
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+    opacity:0.45;
+    transition:opacity .4s ease, transform .5s ease;
+  }
+  .solution-graphic:hover .solution-graphic-img {
+    opacity:0.65;
+    transform:scale(1.05);
+  }
+  .solution-graphic-overlay {
+    position:relative; z-index:1;
+    width:100%;
+    background:linear-gradient(to top, rgba(26,13,46,.85) 0%, rgba(26,13,46,.3) 60%, transparent 100%);
+    padding:2rem 1.5rem 1.5rem;
+    text-align:center;
+    transition:padding .4s ease;
+  }
+  .solution-graphic:hover .solution-graphic-overlay {
+    padding:2.5rem 1.5rem 2rem;
+  }
+  .sol-icon {
+    font-size:2.5rem; display:block; margin-bottom:.5rem;
+    height:2.5rem; line-height:1;
+    position:relative;
+  }
+  .sol-icon .lock-closed,
+  .sol-icon .lock-open {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    transition: opacity .35s ease, transform .45s cubic-bezier(.4,1.6,.55,.95);
+  }
+  .sol-icon .lock-closed { opacity:1; transform:rotate(0) scale(1); }
+  .sol-icon .lock-open { opacity:0; transform:rotate(-15deg) scale(.75); }
+  /* Hover desktop / tap mobile (:active) / focus clavier */
+  .solution-graphic:hover .sol-icon .lock-closed,
+  .solution-graphic:active .sol-icon .lock-closed,
+  .solution-graphic:focus-visible .sol-icon .lock-closed {
+    opacity:0; transform:rotate(15deg) scale(.7);
+  }
+  .solution-graphic:hover .sol-icon .lock-open,
+  .solution-graphic:active .sol-icon .lock-open,
+  .solution-graphic:focus-visible .sol-icon .lock-open {
+    opacity:1; transform:rotate(0) scale(1.05);
+  }
+  .sol-text {
+    font-family:var(--font-title); font-size:1.4rem;
+    letter-spacing:2px; line-height:1.2;
+    color:#fff;
+    text-shadow:0 2px 8px rgba(0,0,0,.4);
+  }
+  .sol-badge {
+    display:inline-block; margin-top:.75rem;
+    background:var(--gold); color:var(--violet-dark);
+    font-size:.7rem; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase;
+    padding:.3rem .9rem; border-radius:3px;
+    opacity:0; transform:translateY(6px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .solution-graphic:hover .sol-badge {
+    opacity:1; transform:translateY(0);
+  }
+
+  /* ── CTA BANDS ── */
+  .cta-band { background:linear-gradient(135deg,var(--violet-mid),var(--violet-deep)); padding:2.5rem 5%; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+  .cta-band-text { font-family:var(--font-title); font-size:clamp(1.5rem,3vw,2.5rem); letter-spacing:2px; color:#fff; }
+  .btn-white { background:var(--gold); color:var(--violet-dark); padding:1rem 2.5rem; border:none; border-radius:6px; font-family:var(--font-title); font-size:1.3rem; letter-spacing:2px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem; transition:transform .15s; white-space:nowrap; font-weight:900; }
+  .btn-white:hover { transform:scale(1.04); }
+  #cta-band-2 { background:linear-gradient(135deg,var(--violet-deep),var(--violet-mid)); border-top:1px solid rgba(132,77,251,.2); padding:2.5rem 5%; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+  .cta-band-2-text { font-family:var(--font-title); font-size:clamp(1.5rem,3vw,2.5rem); letter-spacing:2px; color:#fff; }
+  .dim { color:rgba(255,255,255,.3); }
+
+  /* ── USP ── */
+  #usp { padding:4rem 0; }
+  .usp-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1.5rem; margin-top:3rem; }
+  .usp-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; padding:2rem 1.5rem; text-align:center; transition:all .3s; box-shadow:0 2px 16px rgba(132,77,251,.07); }
+  .usp-card:hover { border-color:rgba(132,77,251,.4); transform:translateY(-6px); box-shadow:0 8px 30px rgba(132,77,251,.15); }
+  .usp-icon { font-size:2.5rem; margin-bottom:1rem; display:block; }
+  .usp-card h3 { font-family:var(--font-title); font-size:1.1rem; letter-spacing:1px; margin-bottom:.5rem; color:var(--violet-dark); }
+  .usp-card p { font-size:.78rem; color:var(--violet-text); line-height:1.5; }
+
+  /* ── PARTENAIRES ── */
+  #partenaires { padding:4rem 0; border-top:1px solid rgba(132,77,251,.12); border-bottom:1px solid rgba(132,77,251,.12); }
+  .partenaires-label { text-align:center; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; color:var(--violet-text); margin-bottom:2rem; }
+  .marquee-outer { overflow:hidden; position:relative; padding:1rem 0; }
+  .marquee-outer::before,
+  .marquee-outer::after { content:''; position:absolute; top:0; bottom:0; width:140px; z-index:2; pointer-events:none; }
+  .marquee-outer::before { left:0; background:linear-gradient(to right,#F9F9F9,transparent); }
+  .marquee-outer::after  { right:0; background:linear-gradient(to left,#F9F9F9,transparent); }
+  .marquee-track { display:flex; align-items:center; gap:3rem; width:max-content; animation:marquee 40s linear infinite; padding:0.5rem 0; }
+  /* marquee-track: no pause on hover — continuous scroll */
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-33.333%)} }
+  .marquee-item { display:flex; align-items:center; flex-shrink:0; opacity:.55; transition:opacity .3s,transform .3s; }
+  .marquee-item:hover { opacity:1; transform:translateY(-2px); }
+  .partner-img { height:44px; width:auto; max-width:140px; display:block; object-fit:contain; filter:grayscale(15%); transition:filter .3s; }
+  .marquee-item:hover .partner-img { filter:grayscale(0%); }
+
+
+
+  /* ── 3 ÉTAPES ── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    position: relative;
+  }
+  /* Segment gauche : bord droit cercle 1 → bord gauche cercle 2 */
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: calc(1.5rem + 30px);
+    left:  calc(100% / 6 + 32px);
+    right: calc(50% + 32px);
+    height: 2px;
+    background: linear-gradient(to right, var(--violet-mid), rgba(132,77,251,.5));
+    z-index: 5;
+    pointer-events: none;
+  }
+  /* Segment droit : bord droit cercle 2 → bord gauche cercle 3 */
+  .steps::after {
+    content: '';
+    position: absolute;
+    top: calc(1.5rem + 30px);
+    left:  calc(50% + 32px);
+    right: calc(100% / 6 + 32px);
+    height: 2px;
+    background: linear-gradient(to right, rgba(132,77,251,.5), var(--violet-mid));
+    z-index: 5;
+    pointer-events: none;
+    display: block;
+  }
+
+  .step-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s ease, border-color .35s ease;
+    box-shadow: 0 2px 16px rgba(132,77,251,.07);
+    position: relative;
+    z-index: 1;
+  }
+  .step-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(132,77,251,.18);
+    border-color: rgba(132,77,251,.4);
+  }
+
+  /* Cercle numéro — fond blanc solide + halo blanc pour masquer la ligne */
+  .step-num {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--violet-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-title); font-size: 1.8rem;
+    color: var(--violet-mid);
+    background: #F4EEFF;   /* légèrement teinté pour s'harmoniser avec le dégradé */
+    box-shadow: 0 0 0 6px #F4EEFF; /* halo = masque la ligne sur les bords du cercle */
+    position: relative; z-index: 25;
+    margin: 1.5rem auto 0;
+    flex-shrink: 0;
+  }
+
+  /* Image avec marges et bords arrondis */
+  .step-img-wrap {
+    width: calc(100% - 2rem);
+    margin: 1rem auto 0;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .step-card-photo {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+    transition: transform .5s ease;
+  }
+  .step-card:hover .step-card-photo { transform: scale(1.05); }
+
+  /* Texte sous l'image */
+  .step-card-body {
+    padding: 1.25rem 1.5rem 1.75rem;
+    text-align: center;
+  }
+  .step-card h3 {
+    font-family: var(--font-title); font-size: 1.6rem;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: .5rem; color: var(--gold); font-weight: 400;
+  }
+  .step-card p { font-size: .88rem; color: var(--violet-text); line-height: 1.65; }
+
+  /* ── MÉTHODES ── */
+  #methodes { padding:4rem 0; }
+  #reassurance { padding:4rem 0; }
+  .reassurance-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1.5rem; margin-top:2.5rem; }
+  .reas-item { display:flex; flex-direction:column; align-items:center; gap:.8rem; text-align:center; padding:1.5rem 1rem; border-radius:8px; transition:background .3s; }
+  .reas-item:hover { background:rgba(132,77,251,.06); }
+  .reas-icon { font-size:2.2rem; color:var(--gold); }
+  .reas-label { font-size:.82rem; font-weight:600; color:var(--violet-dark); line-height:1.4; }
+
+  /* ── URGENCE ── */
+  #urgence { padding:4rem 0; }
+  .urgence-inner { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:3rem; }
+  .urgence-card { background:var(--card-bg); border:1px solid rgba(132,77,251,.2); border-radius:12px; padding:2rem; text-align:center; position:relative; overflow:hidden; box-shadow:0 2px 16px rgba(132,77,251,.08); }
+  .urgence-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--violet-mid),var(--gold)); }
+  .urgence-icon { font-size:2.5rem; margin-bottom:1rem; }
+  .urgence-card h3 { font-family:var(--font-title); font-size:1.3rem; letter-spacing:1px; color:var(--violet-mid); margin-bottom:.5rem; }
+  .urgence-card p { font-size:.88rem; color:var(--violet-text); line-height:1.6; }
+
+  /* ── CTA FINAL ── */
+  #cta-final { background:linear-gradient(135deg,#2a1060 0%,#1a0d2e 50%,#2a0850 100%); padding:4rem 5%; text-align:center; position:relative; overflow:hidden; }
+  #cta-final::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%,rgba(132,77,251,.2) 0%,transparent 70%); }
+  .cta-final-inner { position:relative; z-index:1; max-width:700px; margin:0 auto; }
+  .cta-final-title { font-family:var(--font-title); font-size:clamp(3rem,5vw,5.5rem); line-height:.95; letter-spacing:2px; margin-bottom:1.5rem; color:#fff; }
+  .cta-final-title .gold-light { color:var(--gold); }
+  .cta-final-sub { font-size:1rem; color:rgba(255,255,255,.65); margin-bottom:3rem; }
+  .cta-final-actions { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1.5rem; }
+  .cta-final-phone { font-family:var(--font-title); font-size:clamp(2.5rem,5vw,4rem); letter-spacing:4px; color:var(--gold); }
+  .btn-cta-final { background:linear-gradient(135deg,var(--gold),var(--gold)); color:var(--violet-dark); padding:1.2rem 3.5rem; border:none; border-radius:8px; font-family:var(--font-title); font-size:1.8rem; letter-spacing:3px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.7rem; box-shadow:0 0 50px rgba(255,190,0,.3); transition:transform .2s,box-shadow .2s; font-weight:900; }
+  .btn-cta-final:hover { transform:scale(1.05); box-shadow:0 0 70px rgba(255,190,0,.5); }
+  .cta-rappel { font-size:.85rem; color:rgba(255,255,255,.4); }
+
+  /* ── FOOTER ── */
+  footer { background:#1a0d2e; padding:4rem 5% 2rem; border-top:1px solid rgba(132,77,251,.15); }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:4rem; margin-bottom:3rem; max-width:1300px; margin-left:auto; margin-right:auto; }
+  .footer-logo img { height:32px; display:block; margin-bottom:1rem; }
+  .footer-brand p { font-size:.88rem; color:rgba(249,249,249,.45); line-height:1.7; max-width:300px; }
+  .footer-col h4 { font-family:var(--font-title); font-size:1rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:1.2rem; color:var(--gold); }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
+  .footer-col ul li { font-size:.85rem; color:rgba(249,249,249,.4); }
+  .footer-col ul li a { color:rgba(249,249,249,.4); text-decoration:none; transition:color .2s; }
+  .footer-col ul li a:hover { color:#F9F9F9; }
+  .footer-bottom { max-width:1300px; margin:2rem auto 0; padding-top:2rem; border-top:1px solid rgba(249,249,249,.05); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.75rem; color:rgba(249,249,249,.25); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity .7s ease,transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:#F9F9F9; }
+  ::-webkit-scrollbar-thumb { background:var(--violet-mid); border-radius:10px; }
+
+  /* ── BURGER MENU ── */
+  .burger-btn {
+    display:none; flex-direction:column; justify-content:center; gap:5px; flex-shrink:0;
+    background:none; border:none; cursor:pointer; padding:6px; z-index:1100;
+  }
+  .burger-btn span {
+    display:block; width:22px; height:2px; background:var(--violet-dark);
+    border-radius:2px; transition:transform .3s, opacity .3s;
+  }
+  .burger-btn.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity:0; }
+  .burger-btn.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display:flex; position:fixed; top:0; left:0; right:0; bottom:0;
+    background:rgba(249,249,249,0.98); backdrop-filter:blur(20px);
+    z-index:1050; flex-direction:column; align-items:flex-start; justify-content:flex-start;
+    padding:7rem 0 0 8%;  /* = header 80px + petit espace */
+    gap:1.8rem; opacity:0; pointer-events:none; visibility:hidden;
+    transition:opacity .3s ease, visibility .3s ease;
+  }
+  .mobile-menu.open { opacity:1; pointer-events:all; visibility:visible; }
+  .mobile-menu-inner { display:flex; flex-direction:column; align-items:flex-start; gap:1.8rem; width:100%; }
+  .mobile-menu a {
+    font-family:var(--font-title); font-size:1.5rem; letter-spacing:2px;
+    color:var(--violet-dark); text-decoration:none; text-transform:uppercase;
+    transition:color .2s;
+  }
+  .mobile-menu a:hover { color:var(--violet-mid); }
+  /* CTA "Appeler" dans le menu burger : conserve le look du header (blanc sur violet) */
+  .mobile-menu a.btn-primary,
+  .mobile-menu .btn-primary {
+    background: linear-gradient(135deg, var(--violet-mid), var(--violet-deep)) !important;
+    color: #fff !important;
+    font-family: var(--font-body) !important;
+    font-size: 1rem !important;
+    letter-spacing: .04em !important;
+    padding: .95rem 1.8rem !important;
+    border-radius: 8px !important;
+    text-transform: uppercase !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: .5rem !important;
+    box-shadow: 0 4px 20px rgba(132,77,251,.35) !important;
+    width: auto !important;
+    margin-top: .8rem;
+  }
+  .mobile-menu a.btn-primary:hover,
+  .mobile-menu .btn-primary:hover {
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 30px rgba(132,77,251,.5) !important;
+  }
+
+  @media(max-width:991px){
+    /* ── 992px et moins : burger + bouton APPELER visibles dans header ── */
+
+    /* Réduit le padding vertical de toutes les sections sur mobile */
+    section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+    #hero { padding-top: 92px !important; padding-bottom: 0 !important; }
+    .hero-inner { padding:2rem 5% 2.5rem; }
+    #resultats .resultat-item { padding: 2rem 1rem; }
+    .cta-band, #cta-band-2 { padding: 2rem 5%; }
+    #cta-final { padding: 4rem 5%; }
+    .hero-title { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+    .hero-sub { font-size: clamp(1.2rem, 5vw, 1.8rem) !important; }
+    .hero-tagline { font-size: clamp(.95rem, 4vw, 1.2rem) !important; }
+    .hero-bottom { grid-template-columns:1fr; }
+    .hero-bottom .hero-visual-frame:not(.hero-visual-mobile) { display:none; }
+    .hero-visual-mobile { display:block !important; margin: 0 auto 2rem; max-width: 500px; width:100%; }
+    .probleme-grid, .usp-grid, .urgence-grid { grid-template-columns: 1fr; }
+    .solution-inner { grid-template-columns:1fr; gap:2.5rem; }
+    .steps { grid-template-columns:1fr; gap:1.5rem; }
+    .reassurance-grid { grid-template-columns: repeat(2, 1fr); }
+    .reassurance-grid .reas-item:last-child { grid-column:1 / -1; max-width:200px; margin:0 auto; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .avis-header { flex-direction:column; align-items:flex-start; }
+
+    /* ── HEADER mobile/tablet ── */
+    #header {
+      padding:0 5%; height:80px;
+      display: flex !important;  /* en mobile on remet flex */
+      align-items: center; justify-content: space-between;
+      gap: 0;
+    }
+    .header-logo img { height:38px; }
+    .header-nav { display:none; }  /* nav cachée, burger prend le relais */
+
+    /* Right side: burger + bouton (à 992-479px les deux sont visibles) */
+    .header-right { gap:1rem; }
+    .burger-btn { display:flex; }
+
+    /* Bouton "Appeler" reste visible dans le header entre 479px et 991px */
+    .btn-call-header {
+      font-size:.78rem;
+      padding:.55rem 1rem;
+      letter-spacing:.02em;
+    }
+
+    /* Menu mobile : items à gauche, sans le bouton (déjà dans le header) */
+    .mobile-menu-cta { display:none; }
+  }
+
+  
+  @media(max-width:478px){
+    /* ── 479px et moins : bouton "Appeler" disparaît du header,
+       passe dans le menu burger (au bas, dernier item) ── */
+    #header { padding:0 4%; height:72px; }
+    .btn-call-header { display:none !important; }  /* le bouton header disparaît */
+    .header-right { gap:.5rem; }
+
+    /* Dans le menu mobile : on affiche le bouton CTA */
+    .mobile-menu-cta {
+      display:inline-flex !important;
+      margin-top: 1rem;
+      font-size:.9rem;
+      padding:.85rem 1.6rem;
+    }
+  }
+
+
+/* === MENTIONS LÉGALES — utilise la même structure que les sections du site === */
+/* !important pour battre le section { padding-top: 3rem !important } du media mobile */
+#legal-page {
+  padding-top: 200px !important;
+  padding-bottom: 5rem !important;
+}
+#legal-page h1 {
+  font-family: var(--font-title);
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  line-height: 1; letter-spacing: 2px;
+  margin-bottom: 2.5rem;
+  color: var(--violet-dark);
+}
+#legal-page h2 {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  margin: 2.5rem 0 1rem;
+  color: var(--violet-deep);
+}
+#legal-page p { margin-bottom: 1rem; line-height: 1.7; color: var(--violet-text); }
+#legal-page .placeholder {
+  background: rgba(255, 190, 0, 0.25);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: .9em;
+  color: #8a6500;
+}
+#legal-page a { color: var(--violet-mid); }
+@media(max-width:991px){
+  #legal-page {
+    padding-top: 130px !important;
+    padding-bottom: 4rem !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu" id="mobileMenu" onclick="handleOverlayClick(event)">
+  <div class="mobile-menu-inner">
+    <a href="index.html#hero" onclick="closeMobileMenu()">Accueil</a>
+    <a href="index.html#methodes" onclick="closeMobileMenu()">Notre Méthode</a>
+    <a href="index.html#avis" onclick="closeMobileMenu()">Témoignages</a>
+    <a href="index.html#cta-final" onclick="closeMobileMenu()">Nous contacter</a>
+    
+  </div>
+</div>
+
+<header id="header">
+  <a href="index.html#hero" class="header-logo">
+    <img src="images/serrurier-toulouse.svg" alt="Serrurier Toulouse" height="38">
+  </a>
+  <nav><ul class="header-nav">
+    <li><a href="index.html#hero">Accueil</a></li>
+    <li><a href="index.html#methodes">Notre Méthode</a></li>
+    <li><a href="index.html#avis">Témoignages</a></li>
+    <li><a href="index.html#cta-final">Nous contacter</a></li>
+  </ul></nav>
+  <div class="header-right">
+    <button class="burger-btn" id="burgerBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="tel:+33767850787" class="btn-primary btn-call-header">📞 Appeler maintenant</a>
+  </div>
+</header>
+
+<section id="legal-page">
+  <div class="section-inner">
+  <h1>Mentions légales</h1>
+
+  <p>Conformément aux dispositions des articles 6-III et 19 de la loi n° 2004-575 du 21 juin 2004 pour la Confiance dans l'économie numérique (LCEN), il est porté à la connaissance des utilisateurs du site serruriertoulouse.fr les présentes mentions légales.</p>
+
+  <h2>Éditeur du site</h2>
+  <p>
+    <strong>Raison sociale :</strong> <span class="placeholder">[RAISON SOCIALE]</span><br>
+    <strong>Forme juridique :</strong> <span class="placeholder">[SARL / SAS / EI / Auto-entrepreneur]</span><br>
+    <strong>Capital social :</strong> <span class="placeholder">[MONTANT EN €]</span> (le cas échéant)<br>
+    <strong>Siège social :</strong> <span class="placeholder">[ADRESSE COMPLÈTE DU SIÈGE]</span><br>
+    <strong>SIRET :</strong> <span class="placeholder">[NUMÉRO SIRET À 14 CHIFFRES]</span><br>
+    <strong>RCS :</strong> <span class="placeholder">[VILLE DU GREFFE] [NUMÉRO RCS]</span><br>
+    <strong>N° TVA intracommunautaire :</strong> <span class="placeholder">[FRXX XXXXXXXXX]</span> (le cas échéant)<br>
+    <strong>Téléphone :</strong> <a href="tel:+33767850787">07 67 85 07 87</a><br>
+    <strong>Email :</strong> <a href="mailto:contact@serruriertoulouse.fr">contact@serruriertoulouse.fr</a>
+  </p>
+
+  <h2>Directeur de la publication</h2>
+  <p><span class="placeholder">[PRÉNOM NOM DU DIRIGEANT]</span>, en qualité de <span class="placeholder">[gérant / président / dirigeant]</span> de <span class="placeholder">[RAISON SOCIALE]</span>.</p>
+
+  <h2>Hébergeur du site</h2>
+  <p>
+    <strong>OVH SAS</strong><br>
+    2 rue Kellermann<br>
+    59100 Roubaix – France<br>
+    Téléphone : 09 72 10 10 07<br>
+    Site web : <a href="https://www.ovh.com" target="_blank" rel="noopener">www.ovh.com</a>
+  </p>
+
+  <h2>Propriété intellectuelle</h2>
+  <p>L'ensemble du contenu présent sur le site serruriertoulouse.fr (textes, images, photographies, logos, vidéos, icônes, structure, code source) est la propriété exclusive de <span class="placeholder">[RAISON SOCIALE]</span> ou de ses partenaires, et est protégé par les lois françaises et internationales relatives au droit d'auteur et à la propriété intellectuelle.</p>
+  <p>Toute reproduction, représentation, modification, publication, transmission ou exploitation, totale ou partielle, des contenus du site, par quelque procédé que ce soit, sans l'autorisation écrite préalable de l'éditeur est interdite et constituerait une contrefaçon sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+
+  <h2>Responsabilité</h2>
+  <p>Les informations diffusées sur le site sont fournies à titre indicatif. L'éditeur s'efforce d'assurer l'exactitude et la mise à jour des informations publiées, mais ne saurait être tenu responsable des erreurs, d'une absence de disponibilité des informations ou de la présence de virus sur son site.</p>
+
+  <h2>Données personnelles</h2>
+  <p>Le site serruriertoulouse.fr ne collecte aucune donnée personnelle de manière automatique. Les seules données traitées sont celles communiquées volontairement par les visiteurs lorsqu'ils nous contactent (par téléphone ou par email).</p>
+  <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez d'un droit d'accès, de rectification, d'opposition, de suppression et de portabilité de vos données personnelles. Pour exercer ces droits, contactez-nous à l'adresse : <a href="mailto:contact@serruriertoulouse.fr">contact@serruriertoulouse.fr</a></p>
+
+  <h2>Cookies</h2>
+  <p>Le site n'utilise pas de cookies de suivi ou de traçage publicitaire. <span class="placeholder">[À MODIFIER si Google Analytics ou autre outil est ajouté]</span></p>
+
+  <h2>Droit applicable et juridiction compétente</h2>
+  <p>Les présentes mentions légales sont régies par le droit français. En cas de litige et après échec de toute tentative de recherche d'une solution amiable, les tribunaux français seront seuls compétents.</p>
+
+  <p style="margin-top:3rem; font-size:.85rem; color:#666;"><em>Dernière mise à jour : <span class="placeholder">[DATE]</span></em></p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo"><img src="images/serrurier-toulouse-2.svg" alt="Serrurier Toulouse" height="32"></div>
+      <p>Votre serrurier de confiance à Toulouse et dans toute l'agglomération. Intervention rapide, transparente et professionnelle 24h/24.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Zones</h4>
+      <ul><li>Toulouse centre</li><li>Balma – Labège</li><li>Colomiers – Blagnac</li><li>Muret – Portet</li><li>Saint-Orens</li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Légal</h4>
+      <ul><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="tel:+33767850787">Contact</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Serrurier Toulouse – Tous droits réservés</span>
+  </div>
+</footer>
+
+<script>
+// Burger menu
+const burgerBtn   = document.getElementById('burgerBtn');
+const mobileMenu  = document.getElementById('mobileMenu');
+function closeMobileMenu(){
+  burgerBtn.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  burgerBtn.setAttribute('aria-expanded','false');
+  document.body.style.overflow='';
+}
+burgerBtn.addEventListener('click',()=>{
+  const isOpen = mobileMenu.classList.toggle('open');
+  burgerBtn.classList.toggle('open');
+  burgerBtn.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMobileMenu(); });
+function handleOverlayClick(e){
+  // close only if clicking the backdrop (not the inner content)
+  if(e.target===document.getElementById('mobileMenu')) closeMobileMenu();
+}
+</script>
+</body>
+</html>

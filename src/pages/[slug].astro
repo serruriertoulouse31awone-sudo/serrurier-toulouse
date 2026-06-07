@@ -1,0 +1,28 @@
+---
+import LandingPage from "@/components/landing/LandingPage.astro";
+import { createLocationFaq } from "@/data/faqContent";
+import { getLocalPageLocations, locations, type LocationConfig } from "@/data/locations";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { createFaqJsonLd, createLocalBusinessJsonLd, createLocationMetadata } from "@/utils/seo";
+
+export function getStaticPaths() {
+  return getLocalPageLocations().map((location) => ({
+    params: { slug: location.slug },
+    props: { location },
+  }));
+}
+
+type Props = {
+  location: LocationConfig;
+};
+
+const { location } = Astro.props as Props;
+const metadata = createLocationMetadata(location);
+const faqItems = createLocationFaq(location);
+---
+
+<BaseLayout metadata={metadata}>
+  <script type="application/ld+json" set:html={JSON.stringify(createLocalBusinessJsonLd(location))}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(createFaqJsonLd(faqItems))}></script>
+  <LandingPage location={location} allLocations={locations} />
+</BaseLayout>

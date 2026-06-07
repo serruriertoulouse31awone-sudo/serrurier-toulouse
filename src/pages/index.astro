@@ -1,0 +1,16 @@
+---
+import LandingPage from "@/components/landing/LandingPage.astro";
+import { createLocationFaq } from "@/data/faqContent";
+import { locations, mainLocation } from "@/data/locations";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { createFaqJsonLd, createLocalBusinessJsonLd, createLocationMetadata } from "@/utils/seo";
+
+const metadata = createLocationMetadata(mainLocation);
+const faqItems = createLocationFaq(mainLocation);
+---
+
+<BaseLayout metadata={metadata}>
+  <script type="application/ld+json" set:html={JSON.stringify(createLocalBusinessJsonLd(mainLocation))}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(createFaqJsonLd(faqItems))}></script>
+  <LandingPage location={mainLocation} allLocations={locations} />
+</BaseLayout>

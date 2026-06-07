@@ -1,0 +1,8 @@
+---
+import Icon from "./Icon.astro";
+const className = Astro.props.class ?? "";
+---
+
+<div class={className} role="img" aria-label="5 étoiles">
+  {Array.from({ length: 5 }).map(() => <Icon name="star" class="rating-star-icon" aria-hidden="true" />)}
+</div>
