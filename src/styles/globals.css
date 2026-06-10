@@ -1428,7 +1428,7 @@
     }
     @media(max-height:760px){
       #probleme.probleme-horizontal-ready {
-        padding:clamp(1.5rem,4vh,2.5rem) 0 !important;
+        padding:calc(80px + clamp(.5rem,2vh,1rem)) 0 clamp(.75rem,2vh,1.25rem) !important;
       }
       #probleme.probleme-horizontal-ready .section-tag {
         margin-bottom:.5rem !important;
@@ -1440,12 +1440,12 @@
       }
       #probleme.probleme-horizontal-ready .probleme-case,
       #probleme.probleme-horizontal-ready .probleme-case--reverse {
-        min-height:calc(100vh - 180px) !important;
+        min-height:calc(100vh - 260px) !important;
         padding:0 clamp(24px,4vw,56px) !important;
-        gap:clamp(2rem,4vw,4rem) !important;
+        gap:clamp(1.5rem,3vw,3rem) !important;
       }
       #probleme.probleme-horizontal-ready .probleme-image-wrap {
-        width:min(26vw,340px,calc(75vh - 172px)) !important;
+        width:min(23vw,300px,calc(62vh - 90px)) !important;
         min-height:0 !important;
       }
       #probleme.probleme-horizontal-ready .prob-title {
@@ -1459,6 +1459,44 @@
       #probleme.probleme-horizontal-ready .prob-impact {
         margin-top:.55rem !important;
         font-size:.9rem !important;
+      }
+    }
+    @media(max-height:700px){
+      #probleme.probleme-horizontal-ready {
+        padding:calc(80px + .45rem) 0 .65rem !important;
+      }
+      #probleme.probleme-horizontal-ready .section-tag {
+        font-size:.62rem !important;
+        margin-bottom:.35rem !important;
+      }
+      #probleme.probleme-horizontal-ready .section-title {
+        font-size:clamp(1.75rem,2.75vw,2.55rem) !important;
+        letter-spacing:1.4px !important;
+      }
+      #probleme.probleme-horizontal-ready .probleme-case,
+      #probleme.probleme-horizontal-ready .probleme-case--reverse {
+        min-height:calc(100vh - 245px) !important;
+        padding:0 clamp(18px,3vw,44px) !important;
+        gap:clamp(1.25rem,2.5vw,2.5rem) !important;
+      }
+      #probleme.probleme-horizontal-ready .probleme-image-wrap {
+        width:min(20vw,250px,calc(56vh - 86px)) !important;
+      }
+      #probleme.probleme-horizontal-ready .probleme-copy {
+        max-width:460px !important;
+        padding-left:clamp(.35rem,1vw,1rem) !important;
+      }
+      #probleme.probleme-horizontal-ready .prob-title {
+        font-size:clamp(1.85rem,3.4vw,2.8rem) !important;
+        margin-bottom:.45rem !important;
+      }
+      #probleme.probleme-horizontal-ready .prob-desc {
+        font-size:.86rem !important;
+        line-height:1.35 !important;
+      }
+      #probleme.probleme-horizontal-ready .prob-impact {
+        margin-top:.45rem !important;
+        font-size:.8rem !important;
       }
     }
   }
