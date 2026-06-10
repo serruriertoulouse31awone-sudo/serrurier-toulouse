@@ -43,6 +43,13 @@ const MOTION = {
   resultCounterDuration: 1.4,
 };
 
+const DESKTOP_SMOOTH_SCROLL_QUERY = "(min-width: 1024px) and (pointer: fine)";
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function shouldUseSmoothScroll() {
+  return window.matchMedia(DESKTOP_SMOOTH_SCROLL_QUERY).matches && !window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
 function setMobileMenuOpen(isOpen: boolean) {
   const burgerBtn = document.getElementById("burgerBtn");
   const mobileMenu = document.getElementById("mobileMenu");
@@ -78,7 +85,7 @@ function scrollToSection(target: Element, lenis?: Lenis | null) {
     return;
   }
 
-  window.scrollTo({ top, behavior: "smooth" });
+  window.scrollTo({ top, behavior: shouldUseSmoothScroll() ? "smooth" : "auto" });
 }
 
 function setupSlider(outer: HTMLElement, track: HTMLElement, pxPerSec: number) {
@@ -807,7 +814,9 @@ function initLanding() {
 
     const sliderCleanups: Array<() => void> = [];
     let slidersInitialized = false;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const desktopSmoothScrollMedia = window.matchMedia(DESKTOP_SMOOTH_SCROLL_QUERY);
+    const reducedMotionMedia = window.matchMedia(REDUCED_MOTION_QUERY);
+    const prefersReducedMotion = reducedMotionMedia.matches;
     let lenis: Lenis | null = null;
     let lenisFrame = 0;
     let removeLenisScrollListener: (() => void) | null = null;
@@ -844,7 +853,18 @@ function initLanding() {
       backToTopButtons.forEach((button) => button.classList.toggle("visible", shouldShow));
     };
 
-    if (!prefersReducedMotion) {
+    const stopLenis = () => {
+      removeLenisScrollListener?.();
+      removeLenisScrollListener = null;
+      if (lenisFrame) window.cancelAnimationFrame(lenisFrame);
+      lenisFrame = 0;
+      lenis?.destroy();
+      lenis = null;
+    };
+
+    const startLenis = () => {
+      if (lenis || !shouldUseSmoothScroll()) return;
+
       lenis = new Lenis({
         duration: 1.15,
         easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
@@ -864,7 +884,16 @@ function initLanding() {
       };
 
       lenisFrame = window.requestAnimationFrame(raf);
-    }
+    };
+
+    const updateSmoothScrollMode = () => {
+      if (shouldUseSmoothScroll()) startLenis();
+      else stopLenis();
+    };
+
+    updateSmoothScrollMode();
+    desktopSmoothScrollMedia.addEventListener("change", updateSmoothScrollMode);
+    reducedMotionMedia.addEventListener("change", updateSmoothScrollMode);
 
     const onBurgerClick = () => setMobileMenuOpen(!mobileMenu?.classList.contains("open"));
     const onOverlayClick = (event: MouseEvent) => {
@@ -943,10 +972,10 @@ function initLanding() {
       window.removeEventListener("load", initSliders);
       window.removeEventListener("load", refreshScrollTriggers);
       document.removeEventListener("click", onAnchorClick);
+      desktopSmoothScrollMedia.removeEventListener("change", updateSmoothScrollMode);
+      reducedMotionMedia.removeEventListener("change", updateSmoothScrollMode);
       window.clearTimeout(hashTimer);
-      removeLenisScrollListener?.();
-      if (lenisFrame) window.cancelAnimationFrame(lenisFrame);
-      lenis?.destroy();
+      stopLenis();
       sliderCleanups.forEach((cleanup) => cleanup());
       document.body.style.overflow = "";
     };
