@@ -44,6 +44,7 @@ const MOTION = {
 };
 
 const DESKTOP_SMOOTH_SCROLL_QUERY = "(min-width: 1024px) and (pointer: fine)";
+const PROBLEME_HORIZONTAL_QUERY = "(min-width: 992px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 function shouldUseSmoothScroll() {
@@ -384,7 +385,7 @@ function setupLandingAnimations() {
     const problemeSection = select("#probleme")[0] as HTMLElement | undefined;
     const problemeFlow = select(".probleme-flow")[0] as HTMLElement | undefined;
     const problemeCases = select(".probleme-case") as HTMLElement[];
-    const isProblemeDesktop = window.matchMedia("(min-width: 992px)").matches;
+    const isProblemeDesktop = window.matchMedia(PROBLEME_HORIZONTAL_QUERY).matches;
 
     if (isProblemeDesktop && problemeSection && problemeFlow && problemeCases.length > 1) {
       const getInitialOffset = () => Math.max(0, (window.innerWidth - problemeCases[0].offsetWidth) / 2);

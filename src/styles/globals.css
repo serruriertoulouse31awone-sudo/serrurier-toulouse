@@ -1426,6 +1426,41 @@
       justify-self:start !important;
       text-align:left !important;
     }
+    @media(max-height:760px){
+      #probleme.probleme-horizontal-ready {
+        padding:clamp(1.5rem,4vh,2.5rem) 0 !important;
+      }
+      #probleme.probleme-horizontal-ready .section-tag {
+        margin-bottom:.5rem !important;
+        padding:.25rem .75rem !important;
+      }
+      #probleme.probleme-horizontal-ready .section-title {
+        font-size:clamp(2rem,3.2vw,3rem) !important;
+        line-height:.92 !important;
+      }
+      #probleme.probleme-horizontal-ready .probleme-case,
+      #probleme.probleme-horizontal-ready .probleme-case--reverse {
+        min-height:calc(100vh - 180px) !important;
+        padding:0 clamp(24px,4vw,56px) !important;
+        gap:clamp(2rem,4vw,4rem) !important;
+      }
+      #probleme.probleme-horizontal-ready .probleme-image-wrap {
+        width:min(26vw,340px,calc(75vh - 172px)) !important;
+        min-height:0 !important;
+      }
+      #probleme.probleme-horizontal-ready .prob-title {
+        font-size:clamp(2.1rem,4vw,3.4rem) !important;
+        margin-bottom:.6rem !important;
+      }
+      #probleme.probleme-horizontal-ready .prob-desc {
+        font-size:clamp(.9rem,1.15vw,1rem) !important;
+        line-height:1.45 !important;
+      }
+      #probleme.probleme-horizontal-ready .prob-impact {
+        margin-top:.55rem !important;
+        font-size:.9rem !important;
+      }
+    }
   }
 
 
