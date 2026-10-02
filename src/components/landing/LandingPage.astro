@@ -15,6 +15,14 @@ const { location = mainLocation, allLocations = locations } = Astro.props as Pro
 const faqItems = createLocationFaq(location);
 const [heroTitleBefore, heroTitleAfter = ""] = location.heroTitle.split("SERRURIER");
 const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location.city}`;
+const heroVideoBaseUrl = "https://customer-dr92srjlhvwfmtbx.cloudflarestream.com/dacbc626f6ee51ac1a273e1343fb7690";
+const heroVideoPosterUrl = `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=600`;
+const heroVideoPosterSrcset = [
+  `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=360 640w`,
+  `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=600 1067w`,
+  `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=900 1600w`,
+].join(", ");
+const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponent(heroVideoPosterUrl)}&autoplay=true&muted=true&controls=true&letterboxColor=transparent`;
 ---
 
 <div class="mobile-menu" id="mobileMenu">
@@ -25,7 +33,7 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
           <a href="#methodes">Notre méthode</a>
           <a href="#avis">Avis</a>
           <a href="#faq">FAQ</a>
-          <a href="tel:+33767850787" class="btn-primary mobile-menu-cta"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler maintenant</a>
+          <a href="tel:+33676168158" class="btn-primary mobile-menu-cta"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler maintenant</a>
           
         </div>
       </div>
@@ -46,7 +54,7 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
           <button class="burger-btn" id="burgerBtn" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false">
             <span></span><span></span><span></span>
           </button>
-          <a href="tel:+33767850787" class="btn-primary btn-call-header"><Icon name="phone-call" class="button-icon" aria-hidden="true" />07 67 85 07 87</a>
+          <a href="tel:+33676168158" class="btn-primary btn-call-header"><Icon name="phone-call" class="button-icon" aria-hidden="true" />06 76 16 81 58</a>
         </div>
       </header>
       
@@ -59,22 +67,28 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
           <p class="hero-tagline">On intervient partout {heroArea} et à toute heure <span class="violet">24h/24, 7j/7.</span></p>
           <p class="hero-promise-text">{location.heroPromise}</p>
           
-          <div class="hero-visual-frame hero-visual-mobile" id="heroVisualMobile">
-            <img src="/images/technicien-serrurier-toulouse-1920.webp" srcset="/images/technicien-serrurier-toulouse-960.webp 960w, /images/technicien-serrurier-toulouse-1920.webp 1920w" alt="Technicien Serrurier Toulouse" width={2508} height={1486} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
-            <div class="hero-play-btn" aria-hidden="true"></div>
+          <div class="hero-visual-frame hero-visual-mobile" id="heroVisualMobile" data-video-src={heroVideoEmbedUrl}>
+            <img src={heroVideoPosterUrl} srcset={heroVideoPosterSrcset} alt="Présentation vidéo de Serrurier Toulouse" width={1067} height={600} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
             <div class="hero-video-label"><div class="live-dot" aria-hidden="true"></div>Technicien disponible · {location.solutionArea}</div>
+            <button class="hero-sound-toggle" type="button" aria-label="Activer le son de la vidéo" aria-pressed="false">
+              <svg class="hero-sound-icon hero-sound-icon--muted" aria-hidden="true" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z" /><path d="m16 9 5 5m0-5-5 5" /></svg>
+              <span class="hero-sound-label">Activer le son</span>
+            </button>
           </div>
-          <div class="hero-cta-wrap" style="animation: fadeInUp .8s .35s both"><a href="tel:+33767850787" class="hero-cta-btn"><Icon name="phone-call" class="button-icon" aria-hidden="true" /><span class="cta-label">Appeler le 07 67 85 07 87</span></a></div>
+          <div class="hero-cta-wrap" style="animation: fadeInUp .8s .35s both"><a href="tel:+33676168158" class="hero-cta-btn"><Icon name="phone-call" class="button-icon" aria-hidden="true" /><span class="cta-label">Appeler le 06 76 16 81 58</span></a></div>
           <div class="hero-bottom">
             <ul class="hero-checklist">
               <li class="hero-check-item"><span class="hero-check-icon"><Icon name="check" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">100% de satisfaction</span></li>
               <li class="hero-check-item"><span class="hero-check-icon"><Icon name="shield-check" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">Partenaire officiel de votre assurance</span></li>
               <li class="hero-check-item"><span class="hero-check-icon"><Icon name="zap" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">Intervention rapide</span></li>
             </ul>
-            <div class="hero-visual-frame" id="heroVisualFrame">
-              <img src="/images/technicien-serrurier-toulouse-1920.webp" srcset="/images/technicien-serrurier-toulouse-960.webp 960w, /images/technicien-serrurier-toulouse-1920.webp 1920w" alt="Technicien Serrurier Toulouse" width={2508} height={1486} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
-              <div class="hero-play-btn" aria-hidden="true"></div>
+            <div class="hero-visual-frame" id="heroVisualFrame" data-video-src={heroVideoEmbedUrl}>
+              <img src={heroVideoPosterUrl} srcset={heroVideoPosterSrcset} alt="Présentation vidéo de Serrurier Toulouse" width={1067} height={600} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
               <div class="hero-video-label"><div class="live-dot" aria-hidden="true"></div>Technicien disponible · {location.solutionArea}</div>
+              <button class="hero-sound-toggle" type="button" aria-label="Activer le son de la vidéo" aria-pressed="false">
+                <svg class="hero-sound-icon hero-sound-icon--muted" aria-hidden="true" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z" /><path d="m16 9 5 5m0-5-5 5" /></svg>
+                <span class="hero-sound-label">Activer le son</span>
+              </button>
             </div>
           </div>
         </div>
@@ -214,7 +228,7 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
       </section>
       
       
-      <div class="cta-band" style="width: min(92%, 1300px); margin: 50px auto; border-radius: 28px; box-shadow: 0 18px 50px rgba(80,32,184,.18); overflow: hidden"><div class="cta-band-text">BLOQUÉ DEHORS ? <span class="cta-inline-arrow" aria-hidden="true" /> ON ARRIVE.</div><a href="tel:+33767850787" class="btn-white"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler le 07 67 85 07 87</a></div>
+      <div class="cta-band" style="width: min(92%, 1300px); margin: 50px auto; border-radius: 28px; box-shadow: 0 18px 50px rgba(80,32,184,.18); overflow: hidden"><div class="cta-band-text">BLOQUÉ DEHORS ? <span class="cta-inline-arrow" aria-hidden="true" /> ON ARRIVE.</div><a href="tel:+33676168158" class="btn-white"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler le 06 76 16 81 58</a></div>
       
       
       
@@ -235,7 +249,7 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
                 <li><span class="dot"></span>Intervention sans casse si possible</li>
               </ul>
             </div>
-            <a href="tel:+33767850787" class="solution-graphic reveal" aria-label="Appeler le serrurier maintenant">
+            <a href="tel:+33676168158" class="solution-graphic reveal" aria-label="Appeler le serrurier maintenant">
         <img src="/images/serrurier-en-intervention-a-toulouse.png" alt={`Serrurier en intervention à ${location.city}`} width={2578} height={1526} sizes="(max-width: 991px) 90vw, 44vw" class="solution-graphic-img" loading="lazy" decoding="async" />
         <div class="solution-graphic-overlay">
           <span class="sol-icon" aria-hidden="true"><span class="lock-closed"><Icon name="lock-keyhole" class="landing-icon" aria-hidden="true" /></span><span class="lock-open"><Icon name="unlock" class="landing-icon" aria-hidden="true" /></span></span>
@@ -385,7 +399,7 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
       </section>
       
       
-      <div id="cta-band-2" style="width: min(92%, 1300px); margin: 50px auto; border-radius: 28px; box-shadow: 0 18px 50px rgba(80,32,184,.18); overflow: visible"><div class="cta-band-2-text">TECHNICIEN DISPONIBLE <span class="cta-inline-arrow" aria-hidden="true" /> MAINTENANT</div><a href="tel:+33767850787" class="btn-white"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler le 07 67 85 07 87</a></div>
+      <div id="cta-band-2" style="width: min(92%, 1300px); margin: 50px auto; border-radius: 28px; box-shadow: 0 18px 50px rgba(80,32,184,.18); overflow: visible"><div class="cta-band-2-text">TECHNICIEN DISPONIBLE <span class="cta-inline-arrow" aria-hidden="true" /> MAINTENANT</div><a href="tel:+33676168158" class="btn-white"><Icon name="phone-call" class="button-icon" aria-hidden="true" />Appeler le 06 76 16 81 58</a></div>
       
       
       <section id="urgence">
@@ -409,7 +423,7 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
           <h2 class="cta-final-title reveal">FINI<br /><span class="gold-light">L'ATTENTE.</span></h2>
           <p class="cta-final-sub reveal">Intervention rapide 24h/24 – {location.solutionArea}</p>
           <div class="cta-final-actions">
-            <a href="tel:+33767850787" class="cta-final-phone reveal">07&nbsp;67&nbsp;85&nbsp;07&nbsp;87</a>
+            <a href="tel:+33676168158" class="cta-final-phone reveal">06&nbsp;76&nbsp;16&nbsp;81&nbsp;58</a>
             <FinalCtaButton />
             <p class="cta-rappel reveal">Prix annoncé avant intervention · Zéro surprise</p>
           </div>
@@ -434,7 +448,7 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
           </div>
           <div class="footer-col">
             <h3>Légal</h3>
-            <ul><li><a href="/mentions-legales.html">Mentions légales</a></li><li><a href="tel:+33767850787">Contact</a></li></ul>
+            <ul><li><a href="/mentions-legales.html">Mentions légales</a></li><li><a href="tel:+33676168158">Contact</a></li></ul>
           </div>
         </div>
         <div class="footer-bottom">
@@ -453,9 +467,9 @@ const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location
         </svg>
       </a>
       <a
-        href="tel:+33767850787"
+        href="tel:+33676168158"
         class="back-to-top mobile-floating-call"
-        aria-label="Appeler le 07 67 85 07 87"
+        aria-label="Appeler le 06 76 16 81 58"
       >
         <Icon name="phone" class="floating-call-icon" aria-hidden="true" />
       </a>

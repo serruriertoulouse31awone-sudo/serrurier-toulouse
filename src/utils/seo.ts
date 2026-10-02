@@ -24,7 +24,7 @@ export function createLocalBusinessJsonLd(location: LocationConfig) {
     name: "[RAISON SOCIALE DU CLIENT]",
     image: absoluteUrl("/images/technicien-serrurier-toulouse.png"),
     url: absoluteUrl(location.url),
-    telephone: "+33767850787",
+    telephone: "+33676168158",
     priceRange: "??",
     address: {
       "@type": "PostalAddress",

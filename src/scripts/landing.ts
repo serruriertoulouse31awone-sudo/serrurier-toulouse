@@ -47,6 +47,41 @@ const DESKTOP_SMOOTH_SCROLL_QUERY = "(min-width: 1024px) and (pointer: fine)";
 const PROBLEME_HORIZONTAL_QUERY = "(min-width: 992px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
+type CloudflareStreamPlayer = {
+  controls: boolean;
+  muted: boolean;
+  paused: boolean;
+  letterboxColor: string;
+  play: () => Promise<void>;
+  pause: () => void;
+  addEventListener: (type: "volumechange", listener: () => void) => void;
+  removeEventListener: (type: "volumechange", listener: () => void) => void;
+};
+
+type CloudflareStreamFactory = (iframe: HTMLIFrameElement) => CloudflareStreamPlayer;
+
+let cloudflareStreamSdkPromise: Promise<CloudflareStreamFactory> | null = null;
+
+function loadCloudflareStreamSdk() {
+  const streamWindow = window as typeof window & { Stream?: CloudflareStreamFactory };
+  if (streamWindow.Stream) return Promise.resolve(streamWindow.Stream);
+  if (cloudflareStreamSdkPromise) return cloudflareStreamSdkPromise;
+
+  cloudflareStreamSdkPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://embed.cloudflarestream.com/embed/sdk.latest.js";
+    script.async = true;
+    script.onload = () => {
+      if (streamWindow.Stream) resolve(streamWindow.Stream);
+      else reject(new Error("Cloudflare Stream SDK indisponible"));
+    };
+    script.onerror = () => reject(new Error("Impossible de charger le SDK Cloudflare Stream"));
+    document.head.appendChild(script);
+  });
+
+  return cloudflareStreamSdkPromise;
+}
+
 function shouldUseSmoothScroll() {
   return window.matchMedia(DESKTOP_SMOOTH_SCROLL_QUERY).matches && !window.matchMedia(REDUCED_MOTION_QUERY).matches;
 }
@@ -847,6 +882,95 @@ function initLanding() {
     const burgerBtn = document.getElementById("burgerBtn");
     const mobileMenu = document.getElementById("mobileMenu");
     const heroSection = document.getElementById("hero");
+    const heroVideoFrames = document.querySelectorAll<HTMLElement>(".hero-visual-frame[data-video-src]");
+    const heroVideoCleanups: Array<() => void> = [];
+
+    heroVideoFrames.forEach((frame) => {
+      const soundButton = frame.querySelector<HTMLButtonElement>(".hero-sound-toggle");
+      const soundLabel = soundButton?.querySelector<HTMLElement>(".hero-sound-label");
+      const videoSrc = frame.dataset.videoSrc;
+      if (!soundButton || !soundLabel || !videoSrc) return;
+
+      let player: CloudflareStreamPlayer | null = null;
+      let iframe: HTMLIFrameElement | null = null;
+      let isVisible = false;
+      let pausedByVisibility = false;
+
+      const initializePlayer = async () => {
+        if (iframe) return;
+
+        iframe = document.createElement("iframe");
+        iframe.className = "hero-video-player";
+        iframe.src = videoSrc;
+        iframe.title = "Vidéo de présentation de Serrurier Toulouse";
+        iframe.allow = "accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture";
+        iframe.allowFullscreen = true;
+        frame.appendChild(iframe);
+        frame.classList.add("is-playing");
+
+        try {
+          const createStreamPlayer = await loadCloudflareStreamSdk();
+          if (!iframe) return;
+          player = createStreamPlayer(iframe);
+          player.controls = true;
+          player.muted = true;
+          player.letterboxColor = "transparent";
+          soundButton.classList.remove("is-dismissed");
+          frame.classList.add("is-player-ready");
+          if (isVisible && !document.hidden) await player.play();
+          else {
+            pausedByVisibility = true;
+            player.pause();
+          }
+        } catch {
+          frame.classList.remove("is-player-ready");
+        }
+      };
+
+      const updatePlayback = () => {
+        if (isVisible && !document.hidden) {
+          if (!iframe) void initializePlayer();
+          else if (player && pausedByVisibility) {
+            pausedByVisibility = false;
+            void player.play().catch(() => undefined);
+          }
+          return;
+        }
+
+        if (player && !player.paused) {
+          pausedByVisibility = true;
+          player.pause();
+        }
+      };
+
+      const visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = Boolean(entry?.isIntersecting && entry.intersectionRatio >= 0.35);
+          updatePlayback();
+        },
+        { threshold: [0, 0.35, 0.75] },
+      );
+
+      const toggleSound = () => {
+        if (!player) return;
+        player.muted = false;
+        soundButton.setAttribute("aria-pressed", "true");
+        soundButton.classList.add("is-dismissed");
+      };
+
+      const onDocumentVisibilityChange = () => updatePlayback();
+
+      visibilityObserver.observe(frame);
+      soundButton.addEventListener("click", toggleSound);
+      document.addEventListener("visibilitychange", onDocumentVisibilityChange);
+      heroVideoCleanups.push(() => {
+        player?.pause();
+        visibilityObserver.disconnect();
+        soundButton.removeEventListener("click", toggleSound);
+        document.removeEventListener("visibilitychange", onDocumentVisibilityChange);
+      });
+    });
+
     const backToTopButtons = document.querySelectorAll<HTMLElement>(".back-to-top");
     const updateBackToTopVisibility = () => {
       if (!heroSection || !backToTopButtons.length) return;
@@ -978,6 +1102,7 @@ function initLanding() {
       window.clearTimeout(hashTimer);
       stopLenis();
       sliderCleanups.forEach((cleanup) => cleanup());
+      heroVideoCleanups.forEach((cleanup) => cleanup());
       document.body.style.overflow = "";
     };
 }
