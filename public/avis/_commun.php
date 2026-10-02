@@ -234,8 +234,11 @@ function entretien(): void
     if (!$attente) {
         return;
     }
-    $texte = count($attente) . " avis attendent votre décision. Ils doivent être publiés ou refusés dans les 7 jours qui suivent leur dépôt.\n\n";
-    $html = '<p>' . count($attente) . ' avis attendent votre décision. Ils doivent être publiés ou refusés dans les 7 jours qui suivent leur dépôt.</p>';
+    $phrase = count($attente) === 1
+        ? '1 avis attend votre décision. Il doit être publié ou refusé dans les 7 jours qui suivent son dépôt.'
+        : count($attente) . ' avis attendent votre décision. Ils doivent être publiés ou refusés dans les 7 jours qui suivent leur dépôt.';
+    $texte = $phrase . "\n\n";
+    $html = '<p>' . $phrase . '</p>';
     foreach ($attente as $a) {
         $ligne = nom_public($a) . ' (' . $a['commune'] . '), ' . $a['note'] . '/5, déposé le ' . date_longue($a['depose_le']);
         $texte .= "- $ligne :\n  " . lien_gestion($a) . "\n";

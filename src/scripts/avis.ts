@@ -109,6 +109,8 @@ export function brancherFormulaireAvis(apresChangement: () => void) {
   const noteTexte = formulaire.querySelector<HTMLElement>(".avis-note-texte");
   const date = formulaire.querySelector<HTMLInputElement>('input[name="date_intervention"]');
   if (date) date.max = new Date().toISOString().slice(0, 10);
+  // lien à envoyer aux clients après une intervention : https://www.serruriertoulouse.fr/#laisser-un-avis
+  if (depot && location.hash === "#laisser-un-avis") depot.open = true;
 
   const compter = () => {
     if (compteur && texte) compteur.textContent = `${texte.value.length} / ${texte.maxLength}`;

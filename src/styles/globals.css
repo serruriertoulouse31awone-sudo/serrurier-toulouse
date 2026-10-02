@@ -980,7 +980,7 @@
       margin-left:auto !important;
       margin-right:auto !important;
     }
-    .avis-score { flex-direction:row; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .avis-score { flex-direction:row; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; text-align:center; }
     .avis-big-score { font-size:3.5rem; }
     .avis-google-badge { font-size:.75rem; padding:.4rem .8rem; }
 
