@@ -1,0 +1,43 @@
+name: Mise en ligne chez OVH
+
+# À chaque envoi sur main, et à la demande depuis l'onglet Actions : construction du site, puis copie de dist/
+# vers l'hébergement OVH en SFTP. Ce qui n'est plus dans dist/ est supprimé du serveur (sauf les vidéos,
+# recopiées seulement si leur taille change). Les réglages des avis (avis-config.php) vivent un dossier
+# au-dessus et ne sont jamais touchés.
+#
+# À créer une fois dans le dépôt (Settings > Secrets and variables > Actions) :
+#   secrets   OVH_SFTP_HOTE (ex. ftp.cluster100.hosting.ovh.net), OVH_SFTP_UTILISATEUR, OVH_SFTP_MOT_DE_PASSE
+#   variable  OVH_DOSSIER : dossier du site sur l'hébergement (www si absent)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: mise-en-ligne-ovh
+  cancel-in-progress: false
+
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Copie vers OVH (SFTP)
+        env:
+          HOTE: ${{ secrets.OVH_SFTP_HOTE }}
+          UTILISATEUR: ${{ secrets.OVH_SFTP_UTILISATEUR }}
+          LFTP_PASSWORD: ${{ secrets.OVH_SFTP_MOT_DE_PASSE }}
+          DOSSIER: ${{ vars.OVH_DOSSIER || 'www' }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          lftp -c "set sftp:auto-confirm yes; set net:max-retries 2; set net:timeout 30; \
+            open --env-password -u \"$UTILISATEUR\" sftp://$HOTE; \
+            mirror --reverse --delete --verbose --parallel=4 --exclude-glob video/ dist/ \"$DOSSIER/\"; \
+            mirror --reverse --ignore-time --verbose dist/video/ \"$DOSSIER/video/\""

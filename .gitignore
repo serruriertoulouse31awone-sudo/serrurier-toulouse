@@ -17,3 +17,6 @@ pnpm-debug.log*
 
 .idea/
 AGENTS.md
+
+# Réglages du système d'avis : seulement sur le serveur, jamais dans le dépôt
+avis-config.php
