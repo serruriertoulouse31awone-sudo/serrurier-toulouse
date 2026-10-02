@@ -122,7 +122,7 @@
   .hero-visual-mobile { display:none; width:100%; max-width:480px; margin-bottom:2rem; }
   .hero-visual-frame::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 60% 40%,rgba(132,77,251,.2) 0%,transparent 60%); z-index:1; }
   .hero-video-label { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.55); backdrop-filter:blur(8px); padding:.75rem 1.2rem; display:flex; align-items:center; gap:.6rem; z-index:2; font-size:.82rem; font-weight:600; color:#F9F9F9; }
-  .hero-video-player { position:absolute; inset:0; width:100%; height:100%; border:0; z-index:3; background:transparent; }
+  .hero-video-player { position:absolute; inset:0; display:block; width:100%; height:100%; border:0; z-index:3; background:transparent; object-fit:cover; }
   .hero-sound-toggle { position:absolute; left:50%; top:clamp(12px,3.5%,24px); z-index:4; display:none; align-items:center; justify-content:center; gap:.55rem; min-height:42px; padding:.62rem 1rem; border:1.5px solid rgba(255,255,255,.9); border-radius:999px; background:linear-gradient(135deg,var(--violet-mid),var(--violet-deep)); color:#fff; font:700 .82rem/1 var(--font-body); box-shadow:0 9px 28px rgba(26,13,46,.42),0 0 0 4px rgba(255,255,255,.13); transform:translateX(-50%); cursor:pointer; white-space:nowrap; transition:transform .2s ease,background .2s ease,box-shadow .2s ease; }
   .hero-sound-toggle:hover { background:linear-gradient(135deg,var(--gold),#e0a800); color:var(--violet-dark); box-shadow:0 12px 38px rgba(26,13,46,.5),0 0 0 7px rgba(255,190,0,.2); transform:translateX(-50%) translateY(-2px); }
   .hero-sound-toggle:focus-visible { outline:3px solid var(--gold); outline-offset:4px; }
@@ -173,6 +173,48 @@
   .avis-stars-sm { display:flex; gap:.12rem; font-size:.85rem; margin-top:.2rem; color:var(--gold); }
   .avis-text { font-size:.88rem; color:rgba(255,255,255,.85); line-height:1.65; }
   .avis-verified { font-size:.72rem; color:rgba(255,255,255,.5); margin-top:1rem; font-weight:600; display:flex; align-items:center; gap:.4rem; }
+
+  /* Avis clients (système maison, 10/2026) : mentions légales près des avis, cartes fixes s'il y en a peu, formulaire */
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .avis-mention { font-size:.85rem; color:var(--violet-text); margin:-1.5rem 0 0; }
+  .avis-mention a, .avis-info a, .avis-retour a { color:var(--violet-deep); font-weight:700; text-decoration:underline; }
+  .avis-marquee-outer.avis-statique { cursor:auto; -webkit-mask-image:none; mask-image:none; }
+  .avis-statique .avis-marquee-track { transform:none !important; width:auto; flex-wrap:wrap; justify-content:center; }
+  .avis-vide { color:var(--violet-text); font-size:.95rem; text-align:center; max-width:36rem; margin:0 auto; padding:0 1rem; }
+  .rating-star-icon--vide { opacity:.3; }
+  .avis-card .avis-date { margin-top:1rem; font-size:.78rem; color:#fff; }
+  .avis-reponse { margin-top:1rem; padding:.85rem 1rem; border-left:3px solid var(--gold); background:rgba(26,13,46,.3); border-radius:8px; font-size:.82rem; color:#fff; }
+  .avis-reponse p { margin-top:.35rem; line-height:1.55; }
+  .avis-depot { max-width:760px; margin:.5rem auto 0; padding:0 1rem; text-align:center; }
+  .avis-depot > summary { list-style:none; }
+  .avis-depot > summary::-webkit-details-marker { display:none; }
+  .avis-depot > summary:focus-visible { outline:3px solid var(--violet-dark); outline-offset:3px; }
+  .avis-form { text-align:left; margin-top:1.5rem; background:#fff; border:1px solid rgba(132,77,251,.25); border-radius:14px; padding:1.5rem; box-shadow:0 12px 40px rgba(80,32,184,.1); }
+  .avis-form-intro, .avis-info { font-size:.85rem; color:var(--violet-text); line-height:1.55; }
+  .avis-form-intro { margin-bottom:1.2rem; }
+  .avis-info { margin:1.2rem 0; }
+  .avis-form-grille { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .avis-form label, .avis-note legend { display:flex; flex-direction:column; gap:.35rem; font-weight:700; font-size:.9rem; color:var(--violet-dark); }
+  .avis-precision { font-weight:400; color:var(--violet-text); }
+  .avis-form input:not([type="radio"]):not([type="checkbox"]), .avis-form textarea { font:inherit; font-weight:400; font-size:1rem; padding:.7rem .85rem; border:1.5px solid #6b5b86; border-radius:10px; background:#fff; color:var(--violet-dark); width:100%; }
+  .avis-form textarea { resize:vertical; min-height:7.5rem; }
+  .avis-form input:focus-visible, .avis-form textarea:focus-visible { outline:3px solid var(--violet-mid); outline-offset:2px; }
+  .avis-form [aria-invalid="true"] { border-color:#b3261e; border-width:2px; }
+  .avis-pleine { grid-column:1 / -1; }
+  .avis-note { border:0; padding:0; margin:0; min-width:0; }
+  .avis-note-etoiles { position:relative; display:inline-flex; flex-direction:row-reverse; gap:.3rem; margin-top:.35rem; }
+  .avis-note-etoiles input { position:absolute; opacity:0; width:1px; height:1px; }
+  .avis-note-etoiles label { cursor:pointer; font-size:1.9rem; line-height:1; }
+  .avis-note-etoiles label .rating-star-icon { fill:transparent; stroke:#6b5b86; stroke-width:1.6; }
+  .avis-note-etoiles input:checked ~ label .rating-star-icon, .avis-note-etoiles label:hover .rating-star-icon, .avis-note-etoiles label:hover ~ label .rating-star-icon { fill:var(--gold); stroke:#8a6500; }
+  .avis-note-etoiles input:focus-visible + label { outline:3px solid var(--violet-mid); outline-offset:2px; border-radius:6px; }
+  .avis-piege { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+  .avis-form .avis-accord { flex-direction:row; align-items:flex-start; gap:.6rem; font-weight:400; }
+  .avis-accord input { width:1.2rem; height:1.2rem; margin-top:.1rem; flex:0 0 auto; accent-color:var(--violet-deep); }
+  .avis-retour { margin-top:1rem; font-weight:700; }
+  .avis-retour--ok { color:#1e6b3a; }
+  .avis-retour--erreur { color:#b3261e; }
+  @media (max-width:640px) { .avis-form-grille { grid-template-columns:1fr; } .avis-form { padding:1.2rem; } }
 
   #resultats { background:linear-gradient(135deg,var(--violet-mid) 0%,var(--violet-deep) 100%); margin:50px 0; padding:40px 0; }
   .resultats-grid { display:grid; grid-template-columns:repeat(3,1fr); }

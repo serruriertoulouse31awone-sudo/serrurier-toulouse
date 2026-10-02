@@ -240,5 +240,5 @@ export function getNeighborLocations(location: LocationConfig, limit = 5) {
 }
 
 export function absoluteUrl(path: string) {
-  return `https://serruriertoulouse.fr${path}`;
+  return `https://www.serruriertoulouse.fr${path}`;
 }

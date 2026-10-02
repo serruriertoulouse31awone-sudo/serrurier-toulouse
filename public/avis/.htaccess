@@ -1,0 +1,4 @@
+# Seules les trois pages publiques s'ouvrent : deposer.php, liste.php, gerer.php.
+<FilesMatch "^(_|\.)">
+  Require all denied
+</FilesMatch>

@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://serruriertoulouse.fr",
+  site: "https://www.serruriertoulouse.fr",
   vite: {
     resolve: {
       tsconfigPaths: true,

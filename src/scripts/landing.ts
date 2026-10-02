@@ -1,29 +1,7 @@
 import gsap from "gsap";
 import Lenis from "lenis";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-type GoogleReview = {
-  rating?: number;
-  publishTime?: string;
-  authorAttribution?: { displayName?: string };
-  text?: { text?: string };
-  originalText?: { text?: string };
-  relativePublishTimeDescription?: string;
-};
-
-type GooglePlaceResponse = {
-  rating?: number;
-  userRatingCount?: number;
-  reviews?: GoogleReview[];
-};
-
-const GOOGLE_REVIEWS_CONFIG = {
-  PLACE_ID: "",
-  API_KEY: "",
-  MIN_RATING: 4,
-  MAX_REVIEWS: 6,
-  LANGUAGE: "fr",
-};
+import { brancherFormulaireAvis, chargerAvis } from "./avis";
 
 const MOTION = {
   ctaScaleFrom: 0.92,
@@ -46,41 +24,6 @@ const MOTION = {
 const DESKTOP_SMOOTH_SCROLL_QUERY = "(min-width: 1024px) and (pointer: fine)";
 const PROBLEME_HORIZONTAL_QUERY = "(min-width: 992px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-
-type CloudflareStreamPlayer = {
-  controls: boolean;
-  muted: boolean;
-  paused: boolean;
-  letterboxColor: string;
-  play: () => Promise<void>;
-  pause: () => void;
-  addEventListener: (type: "volumechange", listener: () => void) => void;
-  removeEventListener: (type: "volumechange", listener: () => void) => void;
-};
-
-type CloudflareStreamFactory = (iframe: HTMLIFrameElement) => CloudflareStreamPlayer;
-
-let cloudflareStreamSdkPromise: Promise<CloudflareStreamFactory> | null = null;
-
-function loadCloudflareStreamSdk() {
-  const streamWindow = window as typeof window & { Stream?: CloudflareStreamFactory };
-  if (streamWindow.Stream) return Promise.resolve(streamWindow.Stream);
-  if (cloudflareStreamSdkPromise) return cloudflareStreamSdkPromise;
-
-  cloudflareStreamSdkPromise = new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = "https://embed.cloudflarestream.com/embed/sdk.latest.js";
-    script.async = true;
-    script.onload = () => {
-      if (streamWindow.Stream) resolve(streamWindow.Stream);
-      else reject(new Error("Cloudflare Stream SDK indisponible"));
-    };
-    script.onerror = () => reject(new Error("Impossible de charger le SDK Cloudflare Stream"));
-    document.head.appendChild(script);
-  });
-
-  return cloudflareStreamSdkPromise;
-}
 
 function shouldUseSmoothScroll() {
   return window.matchMedia(DESKTOP_SMOOTH_SCROLL_QUERY).matches && !window.matchMedia(REDUCED_MOTION_QUERY).matches;
@@ -233,67 +176,6 @@ function setupSlider(outer: HTMLElement, track: HTMLElement, pxPerSec: number) {
     window.removeEventListener("mousemove", onMouseMove);
     window.removeEventListener("mouseup", dragEnd);
   };
-}
-
-async function loadGoogleReviews() {
-  const cfg = GOOGLE_REVIEWS_CONFIG;
-  if (!cfg.PLACE_ID || !cfg.API_KEY) return;
-
-  try {
-    const response = await fetch(`https://places.googleapis.com/v1/places/${cfg.PLACE_ID}?languageCode=${cfg.LANGUAGE}`, {
-      method: "GET",
-      headers: {
-        "X-Goog-Api-Key": cfg.API_KEY,
-        "X-Goog-FieldMask": "reviews,rating,userRatingCount,displayName",
-      },
-    });
-
-    if (!response.ok) throw new Error(`Status ${response.status}`);
-
-    const data = (await response.json()) as GooglePlaceResponse;
-    const reviews = (data.reviews ?? [])
-      .filter((review) => (review.rating ?? 0) >= cfg.MIN_RATING)
-      .sort((a, b) => new Date(b.publishTime ?? 0).getTime() - new Date(a.publishTime ?? 0).getTime())
-      .slice(0, cfg.MAX_REVIEWS);
-
-    if (reviews.length === 0) return;
-
-    const bigScore = document.querySelector<HTMLElement>(".avis-big-score");
-    const avisCount = document.querySelector<HTMLElement>(".avis-count");
-    if (bigScore && data.rating) bigScore.textContent = data.rating.toFixed(1);
-    if (avisCount && data.userRatingCount) avisCount.textContent = `${data.userRatingCount} avis Google`;
-
-    const checkIcon =
-      '<svg class="badge-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
-    const cardsHtml = reviews
-      .map((review) => {
-        const rating = review.rating ?? 0;
-        const starIcon =
-          '<svg class="rating-star-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.751a.53.53 0 0 1 .294.904l-3.736 3.644a2.123 2.123 0 0 0-.611 1.878l.882 5.145a.53.53 0 0 1-.77.559l-4.618-2.428a2.122 2.122 0 0 0-1.973 0l-4.618 2.428a.53.53 0 0 1-.77-.56l.882-5.144a2.123 2.123 0 0 0-.611-1.878L2.16 9.79a.53.53 0 0 1 .294-.904l5.165-.751a2.123 2.123 0 0 0 1.596-1.16z"/></svg>';
-        const stars = Array.from({ length: rating }, () => starIcon).join("");
-        const author = review.authorAttribution?.displayName || "Client Google";
-        const initials = author
-          .split(" ")
-          .map((word) => word[0])
-          .slice(0, 2)
-          .join("")
-          .toUpperCase();
-        const text = (review.text?.text || review.originalText?.text || "").slice(0, 240);
-        const date = review.relativePublishTimeDescription || "";
-
-        return `<div class="avis-card"><div class="avis-top"><div class="avis-avatar">${initials}</div><div><div class="avis-name">${author}</div><div class="avis-stars-sm">${stars}</div>${date ? `<div class="avis-date">${date}</div>` : ""}</div></div><p class="avis-text">${text}</p><div class="avis-verified">${checkIcon} Avis Google vérifié</div></div>`;
-      })
-      .join("");
-
-    document.querySelectorAll<HTMLElement>(".avis-marquee-track").forEach((track) => {
-      track.innerHTML = cardsHtml + cardsHtml + cardsHtml;
-    });
-
-    const badge = document.querySelector<HTMLElement>(".avis-google-badge");
-    if (badge) badge.innerHTML = `${checkIcon} Avis Google vérifiés`;
-  } catch {
-    // Les placeholders restent en place si l'intégration Google n'est pas disponible.
-  }
 }
 
 function setupLandingAnimations() {
@@ -891,45 +773,41 @@ function initLanding() {
       const videoSrc = frame.dataset.videoSrc;
       if (!soundButton || !soundLabel || !videoSrc) return;
 
-      let player: CloudflareStreamPlayer | null = null;
-      let iframe: HTMLIFrameElement | null = null;
+      let player: HTMLVideoElement | null = null;
       let isVisible = false;
       let pausedByVisibility = false;
 
-      const initializePlayer = async () => {
-        if (iframe) return;
+      const initializePlayer = () => {
+        if (player) return;
 
-        iframe = document.createElement("iframe");
-        iframe.className = "hero-video-player";
-        iframe.src = videoSrc;
-        iframe.title = "Vidéo de présentation de Serrurier Toulouse";
-        iframe.allow = "accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture";
-        iframe.allowFullscreen = true;
-        frame.appendChild(iframe);
-        frame.classList.add("is-playing");
+        const video = document.createElement("video");
+        video.className = "hero-video-player";
+        video.src = videoSrc;
+        const poster = frame.querySelector<HTMLImageElement>(".hero-visual-img")?.currentSrc;
+        if (poster) video.poster = poster;
+        video.title = "Vidéo de présentation de Serrurier Toulouse";
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.controls = true;
+        video.preload = "auto";
+        video.addEventListener("error", () => {
+          frame.classList.remove("is-player-ready", "is-playing");
+          video.remove();
+          player = null;
+        });
+        frame.appendChild(video);
+        frame.classList.add("is-playing", "is-player-ready");
+        soundButton.classList.remove("is-dismissed");
+        player = video;
 
-        try {
-          const createStreamPlayer = await loadCloudflareStreamSdk();
-          if (!iframe) return;
-          player = createStreamPlayer(iframe);
-          player.controls = true;
-          player.muted = true;
-          player.letterboxColor = "transparent";
-          soundButton.classList.remove("is-dismissed");
-          frame.classList.add("is-player-ready");
-          if (isVisible && !document.hidden) await player.play();
-          else {
-            pausedByVisibility = true;
-            player.pause();
-          }
-        } catch {
-          frame.classList.remove("is-player-ready");
-        }
+        if (isVisible && !document.hidden) void video.play().catch(() => undefined);
+        else pausedByVisibility = true;
       };
 
       const updatePlayback = () => {
         if (isVisible && !document.hidden) {
-          if (!iframe) void initializePlayer();
+          if (!player) initializePlayer();
           else if (player && pausedByVisibility) {
             pausedByVisibility = false;
             void player.play().catch(() => undefined);
@@ -954,6 +832,7 @@ function initLanding() {
       const toggleSound = () => {
         if (!player) return;
         player.muted = false;
+        void player.play().catch(() => undefined);
         soundButton.setAttribute("aria-pressed", "true");
         soundButton.classList.add("is-dismissed");
       };
@@ -1082,7 +961,10 @@ function initLanding() {
       }
     }, 100);
 
-    void loadGoogleReviews();
+    // Les avis et le formulaire changent la hauteur de la page après coup : les sections épinglées doivent être recalculées.
+    const recalculerDefilement = () => ScrollTrigger.refresh();
+    void chargerAvis().then(recalculerDefilement);
+    const avisCleanup = brancherFormulaireAvis(recalculerDefilement);
 
     return () => {
       animationContext.revert();
@@ -1103,6 +985,7 @@ function initLanding() {
       stopLenis();
       sliderCleanups.forEach((cleanup) => cleanup());
       heroVideoCleanups.forEach((cleanup) => cleanup());
+      avisCleanup();
       document.body.style.overflow = "";
     };
 }

@@ -21,23 +21,10 @@ export function createLocalBusinessJsonLd(location: LocationConfig) {
   return {
     "@context": "https://schema.org",
     "@type": "Locksmith",
-    name: "[RAISON SOCIALE DU CLIENT]",
+    name: "Serrurier Toulouse",
     image: absoluteUrl("/images/technicien-serrurier-toulouse.png"),
     url: absoluteUrl(location.url),
     telephone: "+33676168158",
-    priceRange: "??",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "[ADRESSE DU SI?GE]",
-      addressLocality: "Toulouse",
-      postalCode: "[CODE POSTAL]",
-      addressCountry: "FR",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 43.604652,
-      longitude: 1.444209,
-    },
     areaServed: [{ "@type": "City", name: location.city }, ...location.nearbyCities.map((city) => ({ "@type": "City", name: city }))],
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
@@ -45,7 +32,6 @@ export function createLocalBusinessJsonLd(location: LocationConfig) {
       opens: "00:00",
       closes: "23:59",
     },
-    sameAs: ["https://www.google.com/maps/place/[LIEN-GOOGLE-BUSINESS-PROFILE]"],
   };
 }
 

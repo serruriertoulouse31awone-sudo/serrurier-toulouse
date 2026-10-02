@@ -22,24 +22,21 @@ const { metadata } = Astro.props as Props;
       name="keywords"
       content="serrurier toulouse, serrurier toulouse 24h 24, ouverture de porte toulouse, dépannage serrure toulouse, urgence serrurier toulouse, serrurier Balma, serrurier Blagnac, serrurier Colomiers"
     />
-    <meta name="author" content="[RAISON SOCIALE]" />
+    <meta name="author" content="Serrurier Toulouse" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={metadata.canonical} />
     <link rel="icon" href="/images/serrurier-toulouse.svg" />
     <link
       rel="preload"
       as="image"
-      href="https://customer-dr92srjlhvwfmtbx.cloudflarestream.com/dacbc626f6ee51ac1a273e1343fb7690/thumbnails/thumbnail.jpg?time=&height=600"
-      imagesrcset="https://customer-dr92srjlhvwfmtbx.cloudflarestream.com/dacbc626f6ee51ac1a273e1343fb7690/thumbnails/thumbnail.jpg?time=&height=360 640w, https://customer-dr92srjlhvwfmtbx.cloudflarestream.com/dacbc626f6ee51ac1a273e1343fb7690/thumbnails/thumbnail.jpg?time=&height=600 1067w, https://customer-dr92srjlhvwfmtbx.cloudflarestream.com/dacbc626f6ee51ac1a273e1343fb7690/thumbnails/thumbnail.jpg?time=&height=900 1600w"
+      href="/video/vignette-1067.webp"
+      imagesrcset="/video/vignette-640.webp 640w, /video/vignette-1067.webp 1067w, /video/vignette-1600.webp 1600w"
       imagesizes="(max-width: 991px) 90vw, 56vw"
       fetchpriority="high"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/polices.css" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={metadata.canonical} />
     <meta property="og:title" content={metadata.title} />

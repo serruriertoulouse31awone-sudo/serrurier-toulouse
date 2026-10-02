@@ -15,14 +15,9 @@ const { location = mainLocation, allLocations = locations } = Astro.props as Pro
 const faqItems = createLocationFaq(location);
 const [heroTitleBefore, heroTitleAfter = ""] = location.heroTitle.split("SERRURIER");
 const heroArea = location.city === "Toulouse" ? "dans Toulouse" : `à ${location.city}`;
-const heroVideoBaseUrl = "https://customer-dr92srjlhvwfmtbx.cloudflarestream.com/dacbc626f6ee51ac1a273e1343fb7690";
-const heroVideoPosterUrl = `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=600`;
-const heroVideoPosterSrcset = [
-  `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=360 640w`,
-  `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=600 1067w`,
-  `${heroVideoBaseUrl}/thumbnails/thumbnail.jpg?time=&height=900 1600w`,
-].join(", ");
-const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponent(heroVideoPosterUrl)}&autoplay=true&muted=true&controls=true&letterboxColor=transparent`;
+// Vidéo d'accueil hébergée avec le site : 720p pour le cadre mobile, 1080p pour l'ordinateur.
+const heroVideoPosterUrl = "/video/vignette-1067.webp";
+const heroVideoPosterSrcset = "/video/vignette-640.webp 640w, /video/vignette-1067.webp 1067w, /video/vignette-1600.webp 1600w";
 ---
 
 <div class="mobile-menu" id="mobileMenu">
@@ -67,7 +62,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
           <p class="hero-tagline">On intervient partout {heroArea} et à toute heure <span class="violet">24h/24, 7j/7.</span></p>
           <p class="hero-promise-text">{location.heroPromise}</p>
           
-          <div class="hero-visual-frame hero-visual-mobile" id="heroVisualMobile" data-video-src={heroVideoEmbedUrl}>
+          <div class="hero-visual-frame hero-visual-mobile" id="heroVisualMobile" data-video-src="/video/serrurier-toulouse-720.mp4">
             <img src={heroVideoPosterUrl} srcset={heroVideoPosterSrcset} alt="Présentation vidéo de Serrurier Toulouse" width={1067} height={600} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
             <div class="hero-video-label"><div class="live-dot" aria-hidden="true"></div>Technicien disponible · {location.solutionArea}</div>
             <button class="hero-sound-toggle" type="button" aria-label="Activer le son de la vidéo" aria-pressed="false">
@@ -82,7 +77,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
               <li class="hero-check-item"><span class="hero-check-icon"><Icon name="shield-check" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">Partenaire officiel de votre assurance</span></li>
               <li class="hero-check-item"><span class="hero-check-icon"><Icon name="zap" class="landing-icon" aria-hidden="true" /></span><span class="hero-check-text">Intervention rapide</span></li>
             </ul>
-            <div class="hero-visual-frame" id="heroVisualFrame" data-video-src={heroVideoEmbedUrl}>
+            <div class="hero-visual-frame" id="heroVisualFrame" data-video-src="/video/serrurier-toulouse-1080.mp4">
               <img src={heroVideoPosterUrl} srcset={heroVideoPosterSrcset} alt="Présentation vidéo de Serrurier Toulouse" width={1067} height={600} sizes="(max-width: 991px) 90vw, 56vw" class="hero-visual-img" loading="eager" decoding="async" fetchpriority="high" />
               <div class="hero-video-label"><div class="live-dot" aria-hidden="true"></div>Technicien disponible · {location.solutionArea}</div>
               <button class="hero-sound-toggle" type="button" aria-label="Activer le son de la vidéo" aria-pressed="false">
@@ -250,7 +245,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
               </ul>
             </div>
             <a href="tel:+33676168158" class="solution-graphic reveal" aria-label="Appeler le serrurier maintenant">
-        <img src="/images/serrurier-en-intervention-a-toulouse.png" alt={`Serrurier en intervention à ${location.city}`} width={2578} height={1526} sizes="(max-width: 991px) 90vw, 44vw" class="solution-graphic-img" loading="lazy" decoding="async" />
+        <img src="/images/serrurier-en-intervention-a-toulouse-960.webp" srcset="/images/serrurier-en-intervention-a-toulouse-640.webp 640w, /images/serrurier-en-intervention-a-toulouse-960.webp 960w, /images/serrurier-en-intervention-a-toulouse-1280.webp 1280w, /images/serrurier-en-intervention-a-toulouse-1920.webp 1920w" alt={`Serrurier en intervention à ${location.city}`} width={2578} height={1526} sizes="(max-width: 991px) 90vw, 44vw" class="solution-graphic-img" loading="lazy" decoding="async" />
         <div class="solution-graphic-overlay">
           <span class="sol-icon" aria-hidden="true"><span class="lock-closed"><Icon name="lock-keyhole" class="landing-icon" aria-hidden="true" /></span><span class="lock-open"><Icon name="unlock" class="landing-icon" aria-hidden="true" /></span></span>
           <div class="sol-text">INTERVENTION RAPIDE<br />{location.solutionArea.toUpperCase()}</div>
@@ -284,7 +279,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
             <article class="step-card timeline-step reveal">
               <div class="step-num">1</div>
               <div class="step-img-wrap">
-                <img src="/images/vous-appelez.png" alt="Vous appelez" width={2630} height={1520} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+                <img src="/images/vous-appelez-720.webp" srcset="/images/vous-appelez-480.webp 480w, /images/vous-appelez-720.webp 720w, /images/vous-appelez-1080.webp 1080w" alt="Vous appelez" width={2630} height={1520} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
               </div>
               <div class="step-card-body">
                 <h3>Vous appelez</h3>
@@ -294,7 +289,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
             <article class="step-card timeline-step reveal">
               <div class="step-num">2</div>
               <div class="step-img-wrap">
-                <img src="/images/on-annonce-le-prix.png" alt="On annonce le prix" width={2334} height={1518} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+                <img src="/images/on-annonce-le-prix-720.webp" srcset="/images/on-annonce-le-prix-480.webp 480w, /images/on-annonce-le-prix-720.webp 720w, /images/on-annonce-le-prix-1080.webp 1080w" alt="On annonce le prix" width={2334} height={1518} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
               </div>
               <div class="step-card-body">
                 <h3>On annonce le prix</h3>
@@ -304,7 +299,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
             <article class="step-card timeline-step reveal">
               <div class="step-num">3</div>
               <div class="step-img-wrap">
-                <img src="/images/intervention-rapide.png" alt="Intervention rapide" width={2580} height={1526} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+                <img src="/images/intervention-rapide-720.webp" srcset="/images/intervention-rapide-480.webp 480w, /images/intervention-rapide-720.webp 720w, /images/intervention-rapide-1080.webp 1080w" alt="Intervention rapide" width={2580} height={1526} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
               </div>
               <div class="step-card-body">
                 <h3>Intervention rapide</h3>
@@ -314,7 +309,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
             <article class="step-card timeline-step reveal">
               <div class="step-num">4</div>
               <div class="step-img-wrap">
-                <img src="/images/serrurier-en-intervention-a-toulouse.png" alt="Votre porte est ouverte" width={2578} height={1526} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
+                <img src="/images/serrurier-en-intervention-a-toulouse-720.webp" srcset="/images/serrurier-en-intervention-a-toulouse-480.webp 480w, /images/serrurier-en-intervention-a-toulouse-720.webp 720w, /images/serrurier-en-intervention-a-toulouse-1080.webp 1080w" alt="Votre porte est ouverte" width={2578} height={1526} sizes="(max-width: 991px) 285px, 360px" class="step-card-photo" loading="lazy" decoding="async" />
               </div>
               <div class="step-card-body">
                 <h3>Votre porte est ouverte !</h3>
@@ -338,19 +333,50 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
               <div>
                 <div class="avis-big-score">—</div>
                 <RatingStars class="avis-stars" />
-                <div class="avis-count">Avis à venir</div>
+                <div class="avis-count">Avis clients</div>
               </div>
               <div class="avis-google-badge">
-                <Icon name="check" class="badge-icon" aria-hidden="true" /> Avis à venir
+                <Icon name="check" class="badge-icon" aria-hidden="true" /> Avis lus avant publication
               </div>
             </div>
           </div>
+          <p class="avis-mention">Chaque avis est lu avant publication. Classement du plus récent au plus ancien. <a href="/avis-clients">Comment nous publions les avis</a></p>
         </div>
         <div class="avis-marquee-outer">
             <div class="avis-marquee-track" id="avisMarqueeTrack">
-              <div class="avis-card"><div class="avis-top"><div class="avis-avatar">C1</div><div><div class="avis-name">Client n°1</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C2</div><div><div class="avis-name">Client n°2</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C3</div><div><div class="avis-name">Client n°3</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C4</div><div><div class="avis-name">Client n°4</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C5</div><div><div class="avis-name">Client n°5</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C6</div><div><div class="avis-name">Client n°6</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C1</div><div><div class="avis-name">Client n°1</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C2</div><div><div class="avis-name">Client n°2</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C3</div><div><div class="avis-name">Client n°3</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C4</div><div><div class="avis-name">Client n°4</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C5</div><div><div class="avis-name">Client n°5</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C6</div><div><div class="avis-name">Client n°6</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C1</div><div><div class="avis-name">Client n°1</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C2</div><div><div class="avis-name">Client n°2</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C3</div><div><div class="avis-name">Client n°3</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C4</div><div><div class="avis-name">Client n°4</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C5</div><div><div class="avis-name">Client n°5</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div><div class="avis-card"><div class="avis-top"><div class="avis-avatar">C6</div><div><div class="avis-name">Client n°6</div><RatingStars class="avis-stars-sm" /></div></div><p class="avis-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p></div>
+              <noscript><p class="avis-vide">Activez JavaScript pour lire les avis de nos clients.</p></noscript>
             </div>
           </div>
+          <details class="avis-depot" id="laisser-un-avis">
+            <summary class="btn-primary">Laisser un avis</summary>
+            <form class="avis-form" method="post" action="/avis/deposer.php">
+              <p class="avis-form-intro">Votre avis est lu avant d'être publié, sous 7 jours au plus. Seuls votre prénom et l'initiale de votre nom apparaissent sur le site.</p>
+              <div class="avis-form-grille">
+                <label>Prénom<input name="prenom" required maxlength="40" autocomplete="given-name" /></label>
+                <label>Nom<input name="nom" required maxlength="60" autocomplete="family-name" /></label>
+                <label>E-mail <span class="avis-precision">(jamais publié)</span><input type="email" name="email" required maxlength="120" autocomplete="email" /></label>
+                <label>Commune de l'intervention<input name="commune" required maxlength="80" autocomplete="address-level2" /></label>
+                <label>Date de l'intervention<input type="date" name="date_intervention" required /></label>
+                <fieldset class="avis-note">
+                  <legend>Votre note</legend>
+                  <div class="avis-note-etoiles">
+                    {[5, 4, 3, 2, 1].map((n) => (
+                      <>
+                        <input type="radio" name="note" id={`avis-note-${n}`} value={n} required />
+                        <label for={`avis-note-${n}`} title={`${n} sur 5`}><Icon name="star" class="rating-star-icon" aria-hidden="true" /><span class="sr-only">{n} sur 5</span></label>
+                      </>
+                    ))}
+                  </div>
+                </fieldset>
+                <label class="avis-pleine">Votre avis<textarea name="texte" required minlength="20" maxlength="600" rows="5"></textarea></label>
+                <div class="avis-piege" aria-hidden="true"><label>Laissez ce champ vide<input name="site" tabindex="-1" autocomplete="off" /></label></div>
+                <label class="avis-accord avis-pleine"><input type="checkbox" name="accord" value="1" required /> J'accepte que mon avis soit publié sur ce site avec mon prénom et l'initiale de mon nom.</label>
+              </div>
+              <p class="avis-info">Votre e-mail et votre commune servent seulement à vérifier l'intervention et, si besoin, à vous écrire. <a href="/confidentialite">Confidentialité</a> · <a href="/avis-clients">Comment nous publions les avis</a></p>
+              <button type="submit" class="btn-primary">Envoyer mon avis</button>
+              <p class="avis-retour" role="status" aria-live="polite"></p>
+            </form>
+          </details>
         </div>
       </section>
       
@@ -448,7 +474,7 @@ const heroVideoEmbedUrl = `${heroVideoBaseUrl}/iframe?poster=${encodeURIComponen
           </div>
           <div class="footer-col">
             <h3>Légal</h3>
-            <ul><li><a href="/mentions-legales.html">Mentions légales</a></li><li><a href="tel:+33676168158">Contact</a></li></ul>
+            <ul><li><a href="/mentions-legales.html">Mentions légales</a></li><li><a href="/confidentialite">Confidentialité</a></li><li><a href="/avis-clients">Avis clients</a></li><li><a href="tel:+33676168158">Contact</a></li></ul>
           </div>
         </div>
         <div class="footer-bottom">
