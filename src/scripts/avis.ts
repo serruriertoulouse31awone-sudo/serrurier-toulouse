@@ -18,26 +18,31 @@ const ETOILE =
 
 const jourMoisAn = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 const moisAn = new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric" });
+// Dates reçues au format AAAA-MM-JJ (et AAAA-MM pour l'intervention) : lues à midi pour ne jamais changer de jour.
+const jour = (date: string) => jourMoisAn.format(new Date(`${date}T12:00:00`));
 
 function echapper(texte: string) {
   return texte.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string);
 }
 
+const icone = (classe = "") => `<svg class="rating-star-icon${classe}" aria-hidden="true" viewBox="0 0 24 24">${ETOILE}</svg>`;
+
 function etoiles(note: number) {
-  return Array.from({ length: 5 }, (_, i) =>
-    `<svg class="rating-star-icon${i < note ? "" : " rating-star-icon--vide"}" aria-hidden="true" viewBox="0 0 24 24">${ETOILE}</svg>`,
-  ).join("");
+  return Array.from({ length: 5 }, (_, i) => icone(i < note ? "" : " rating-star-icon--vide")).join("");
 }
 
-// Dates reçues au format AAAA-MM-JJ (et AAAA-MM pour l'intervention) : lues à midi pour ne jamais changer de jour.
-const jour = (date: string) => jourMoisAn.format(new Date(`${date}T12:00:00`));
+// Moyenne : cinq étoiles pâles, recouvertes d'étoiles pleines sur la largeur de la note (4,5 = quatre et demie).
+function etoilesMoyenne(moyenne: number) {
+  const cinq = icone().repeat(5);
+  return `<span class="etoiles-fond">${cinq}</span><span class="etoiles-plein" style="width:${(moyenne / 5) * 100}%">${cinq}</span>`;
+}
 
 function carte(a: AvisPublie) {
   const initiales = a.prenom.split(/\s+/).map((mot) => mot.slice(0, 1)).join("").slice(0, 2).toUpperCase();
   const reponse = a.reponse
-    ? `<div class="avis-reponse"><strong>Réponse de Serrurier Toulouse</strong>${a.repondu_le ? ` <span>le ${jour(a.repondu_le)}</span>` : ""}<p>${echapper(a.reponse)}</p></div>`
+    ? `<div class="avis-reponse"><strong>Réponse de Serrurier Toulouse</strong>${a.repondu_le ? `<span class="avis-reponse-date">le ${jour(a.repondu_le)}</span>` : ""}<p>${echapper(a.reponse)}</p></div>`
     : "";
-  return `<article class="avis-card"><div class="avis-top"><div class="avis-avatar" aria-hidden="true">${echapper(initiales)}</div><div><div class="avis-name">${echapper(a.prenom)}</div><div class="avis-stars-sm" role="img" aria-label="Note : ${a.note} sur 5">${etoiles(a.note)}</div></div></div><p class="avis-text">${echapper(a.texte)}</p><p class="avis-date">Publié le ${jour(a.publie_le)} · intervention en ${moisAn.format(new Date(`${a.intervention}-01T12:00:00`))}</p>${reponse}</article>`;
+  return `<article class="avis-card"><div class="avis-top"><div class="avis-avatar" aria-hidden="true">${echapper(initiales)}</div><div><div class="avis-name">${echapper(a.prenom)}</div><div class="avis-stars-sm" role="img" aria-label="Note : ${a.note} sur 5">${etoiles(a.note)}</div></div></div><p class="avis-dates"><span>Publié le ${jour(a.publie_le)}</span><span>Intervention en ${moisAn.format(new Date(`${a.intervention}-01T12:00:00`))}</span></p><p class="avis-text">${echapper(a.texte)}</p>${reponse}</article>`;
 }
 
 export async function chargerAvis() {
@@ -58,26 +63,26 @@ export async function chargerAvis() {
 
   const score = document.querySelector<HTMLElement>(".avis-big-score");
   const compte = document.querySelector<HTMLElement>(".avis-count");
-  const etoilesMoyenne = document.querySelector<HTMLElement>(".avis-score .avis-stars");
+  const etoilesEntete = document.querySelector<HTMLElement>(".avis-score .avis-stars");
   if (liste.total && liste.moyenne !== null) {
     const moyenne = liste.moyenne.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     if (score) score.textContent = moyenne;
     if (compte) compte.textContent = `${liste.total} avis`;
-    if (etoilesMoyenne) {
-      etoilesMoyenne.innerHTML = etoiles(Math.round(liste.moyenne));
-      etoilesMoyenne.setAttribute("aria-label", `Note moyenne : ${moyenne} sur 5`);
+    if (etoilesEntete) {
+      etoilesEntete.innerHTML = etoilesMoyenne(liste.moyenne);
+      etoilesEntete.setAttribute("aria-label", `Note moyenne : ${moyenne} sur 5`);
     }
   } else {
     if (compte) compte.textContent = "Aucun avis pour l'instant";
-    if (etoilesMoyenne) {
-      etoilesMoyenne.innerHTML = etoiles(0);
-      etoilesMoyenne.setAttribute("aria-label", "Pas encore de note");
+    if (etoilesEntete) {
+      etoilesEntete.innerHTML = etoilesMoyenne(0);
+      etoilesEntete.setAttribute("aria-label", "Pas encore de note");
     }
   }
 
   if (!liste.avis.length) {
     outer.classList.add("avis-statique");
-    track.innerHTML = '<p class="avis-vide">Aucun avis publié pour l\'instant. Vous avez fait appel à nous ? Partagez votre expérience ci-dessous.</p>';
+    track.innerHTML = '<p class="avis-vide">Aucun avis publié pour l\'instant. Vous avez fait appel à nous ? Partagez votre expérience avec le formulaire ci-dessous.</p>';
     return;
   }
 
@@ -99,8 +104,19 @@ export function brancherFormulaireAvis(apresChangement: () => void) {
   const depot = formulaire.closest("details");
   const retour = formulaire.querySelector<HTMLElement>(".avis-retour");
   const bouton = formulaire.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const texte = formulaire.querySelector<HTMLTextAreaElement>('textarea[name="texte"]');
+  const compteur = formulaire.querySelector<HTMLElement>(".avis-compteur");
+  const noteTexte = formulaire.querySelector<HTMLElement>(".avis-note-texte");
   const date = formulaire.querySelector<HTMLInputElement>('input[name="date_intervention"]');
   if (date) date.max = new Date().toISOString().slice(0, 10);
+
+  const compter = () => {
+    if (compteur && texte) compteur.textContent = `${texte.value.length} / ${texte.maxLength}`;
+  };
+  const noter = (evenement: Event) => {
+    const choix = evenement.target as HTMLInputElement;
+    if (choix.name === "note" && noteTexte) noteTexte.textContent = `${choix.value} sur 5`;
+  };
 
   const envoyer = async (evenement: SubmitEvent) => {
     evenement.preventDefault();
@@ -120,6 +136,9 @@ export function brancherFormulaireAvis(apresChangement: () => void) {
       retour.classList.add(resultat.ok ? "avis-retour--ok" : "avis-retour--erreur");
       if (resultat.ok) {
         formulaire.reset();
+        compter();
+        if (noteTexte) noteTexte.textContent = "Choisissez de 1 à 5 étoiles";
+        formulaire.classList.add("avis-form--envoye");
         if (resultat.lien_google) {
           const lien = document.createElement("a");
           lien.href = resultat.lien_google;
@@ -128,9 +147,14 @@ export function brancherFormulaireAvis(apresChangement: () => void) {
           lien.textContent = "Laisser aussi votre avis sur Google";
           retour.append(" ", lien);
         }
+        retour.tabIndex = -1;
+        retour.focus();
       } else if (resultat.erreurs) {
         const noms = Object.keys(resultat.erreurs);
-        noms.forEach((nom) => formulaire.elements.namedItem(nom) instanceof Element && (formulaire.elements.namedItem(nom) as Element).setAttribute("aria-invalid", "true"));
+        noms.forEach((nom) => {
+          const champ = formulaire.elements.namedItem(nom);
+          if (champ instanceof Element) champ.setAttribute("aria-invalid", "true");
+        });
         retour.textContent = `${resultat.message} ${Object.values(resultat.erreurs).join(" ")}`;
         (formulaire.elements.namedItem(noms[0]) as HTMLElement | null)?.focus?.();
       }
@@ -144,9 +168,13 @@ export function brancherFormulaireAvis(apresChangement: () => void) {
   };
 
   formulaire.addEventListener("submit", envoyer);
+  formulaire.addEventListener("change", noter);
+  texte?.addEventListener("input", compter);
   depot?.addEventListener("toggle", apresChangement);
   return () => {
     formulaire.removeEventListener("submit", envoyer);
+    formulaire.removeEventListener("change", noter);
+    texte?.removeEventListener("input", compter);
     depot?.removeEventListener("toggle", apresChangement);
   };
 }

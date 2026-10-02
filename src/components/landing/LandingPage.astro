@@ -1,6 +1,5 @@
 ---
 import Icon from "./Icon.astro";
-import RatingStars from "./RatingStars.astro";
 import FinalCtaButton from "./FinalCtaButton.astro";
 import FaqSection from "./FaqSection.astro";
 import { createLocationFaq } from "@/data/faqContent";
@@ -332,7 +331,7 @@ const heroVideoPosterSrcset = "/video/vignette-640.webp 640w, /video/vignette-10
             <div class="avis-score">
               <div>
                 <div class="avis-big-score">—</div>
-                <RatingStars class="avis-stars" />
+                <div class="avis-stars" role="img" aria-label="Note moyenne à venir"></div>
                 <div class="avis-count">Avis clients</div>
               </div>
               <div class="avis-google-badge">
@@ -340,40 +339,50 @@ const heroVideoPosterSrcset = "/video/vignette-640.webp 640w, /video/vignette-10
               </div>
             </div>
           </div>
-          <p class="avis-mention">Chaque avis est lu avant publication. Classement du plus récent au plus ancien. <a href="/avis-clients">Comment nous publions les avis</a></p>
         </div>
         <div class="avis-marquee-outer">
             <div class="avis-marquee-track" id="avisMarqueeTrack">
               <noscript><p class="avis-vide">Activez JavaScript pour lire les avis de nos clients.</p></noscript>
             </div>
           </div>
+          <p class="avis-mention">Chaque avis est lu avant d'être publié. Classement du plus récent au plus ancien. <a href="/avis-clients">Comment nous publions les avis</a></p>
           <details class="avis-depot" id="laisser-un-avis">
-            <summary class="btn-primary">Laisser un avis</summary>
+            <summary class="btn-primary"><span class="avis-depot-ouvrir">Laisser un avis</span><span class="avis-depot-fermer">Fermer le formulaire</span></summary>
             <form class="avis-form" method="post" action="/avis/deposer.php">
-              <p class="avis-form-intro">Votre avis est lu avant d'être publié, sous 7 jours au plus. Seuls votre prénom et l'initiale de votre nom apparaissent sur le site.</p>
-              <div class="avis-form-grille">
-                <label>Prénom<input name="prenom" required maxlength="40" autocomplete="given-name" /></label>
-                <label>Nom<input name="nom" required maxlength="60" autocomplete="family-name" /></label>
-                <label>E-mail <span class="avis-precision">(jamais publié)</span><input type="email" name="email" required maxlength="120" autocomplete="email" /></label>
-                <label>Commune de l'intervention<input name="commune" required maxlength="80" autocomplete="address-level2" /></label>
-                <label>Date de l'intervention<input type="date" name="date_intervention" required /></label>
+              <div class="avis-form-tete">
+                <h3 class="avis-form-titre">Votre avis sur notre intervention</h3>
+                <p class="avis-form-intro">Il est lu avant d'être publié, sous 7 jours au plus. Seuls votre prénom et l'initiale de votre nom apparaissent sur le site. Tous les champs sont obligatoires.</p>
+              </div>
+              <div class="avis-form-corps">
                 <fieldset class="avis-note">
                   <legend>Votre note</legend>
-                  <div class="avis-note-etoiles">
-                    {[5, 4, 3, 2, 1].map((n) => (
-                      <>
-                        <input type="radio" name="note" id={`avis-note-${n}`} value={n} required />
-                        <label for={`avis-note-${n}`} title={`${n} sur 5`}><Icon name="star" class="rating-star-icon" aria-hidden="true" /><span class="sr-only">{n} sur 5</span></label>
-                      </>
-                    ))}
+                  <div class="avis-note-ligne">
+                    <div class="avis-note-etoiles">
+                      {[5, 4, 3, 2, 1].map((n) => (
+                        <>
+                          <input type="radio" name="note" id={`avis-note-${n}`} value={n} required />
+                          <label for={`avis-note-${n}`} title={`${n} sur 5`}><Icon name="star" class="rating-star-icon" aria-hidden="true" /><span class="sr-only">{n} sur 5</span></label>
+                        </>
+                      ))}
+                    </div>
+                    <span class="avis-note-texte" aria-hidden="true">Choisissez de 1 à 5 étoiles</span>
                   </div>
                 </fieldset>
-                <label class="avis-pleine">Votre avis<textarea name="texte" required minlength="20" maxlength="600" rows="5"></textarea></label>
+                <div class="avis-form-grille">
+                  <label class="avis-champ"><span class="avis-libelle">Prénom</span><input name="prenom" required maxlength="40" autocomplete="given-name" /></label>
+                  <label class="avis-champ"><span class="avis-libelle">Nom</span><input name="nom" required maxlength="60" autocomplete="family-name" /></label>
+                  <label class="avis-champ avis-pleine"><span class="avis-libelle">E-mail <span class="avis-precision">jamais publié</span></span><input type="email" name="email" required maxlength="120" autocomplete="email" /></label>
+                  <label class="avis-champ"><span class="avis-libelle">Commune de l'intervention</span><input name="commune" required maxlength="80" autocomplete="address-level2" placeholder="Par exemple : Balma" /></label>
+                  <label class="avis-champ"><span class="avis-libelle">Date de l'intervention</span><input type="date" name="date_intervention" required /></label>
+                  <label class="avis-champ avis-pleine"><span class="avis-libelle">Votre avis <span class="avis-compteur" aria-hidden="true">0 / 600</span></span><textarea name="texte" required minlength="20" maxlength="600" rows="5"></textarea></label>
+                </div>
                 <div class="avis-piege" aria-hidden="true"><label>Laissez ce champ vide<input name="site" tabindex="-1" autocomplete="off" /></label></div>
-                <label class="avis-accord avis-pleine"><input type="checkbox" name="accord" value="1" required /> J'accepte que mon avis soit publié sur ce site avec mon prénom et l'initiale de mon nom.</label>
+                <label class="avis-accord"><input type="checkbox" name="accord" value="1" required /><span>J'accepte que mon avis soit publié avec mon prénom et l'initiale de mon nom.</span></label>
+                <div class="avis-form-pied">
+                  <p class="avis-info">Votre e-mail et votre commune servent seulement à vérifier l'intervention et, si besoin, à vous écrire. <a href="/confidentialite">Confidentialité</a></p>
+                  <button type="submit" class="btn-primary">Envoyer mon avis</button>
+                </div>
               </div>
-              <p class="avis-info">Votre e-mail et votre commune servent seulement à vérifier l'intervention et, si besoin, à vous écrire. <a href="/confidentialite">Confidentialité</a> · <a href="/avis-clients">Comment nous publions les avis</a></p>
-              <button type="submit" class="btn-primary">Envoyer mon avis</button>
               <p class="avis-retour" role="status" aria-live="polite"></p>
             </form>
           </details>
