@@ -110,7 +110,12 @@ export function brancherFormulaireAvis(apresChangement: () => void) {
   const date = formulaire.querySelector<HTMLInputElement>('input[name="date_intervention"]');
   if (date) date.max = new Date().toISOString().slice(0, 10);
   // lien à envoyer aux clients après une intervention : https://www.serruriertoulouse.fr/#laisser-un-avis
-  if (depot && location.hash === "#laisser-un-avis") depot.open = true;
+  // (aussi quand le lien est ouvert depuis une page du site déjà affichée : seul le « # » change alors)
+  const ouvrirSiLien = () => {
+    if (depot && location.hash === "#laisser-un-avis") depot.open = true;
+  };
+  ouvrirSiLien();
+  window.addEventListener("hashchange", ouvrirSiLien);
 
   const compter = () => {
     if (compteur && texte) compteur.textContent = `${texte.value.length} / ${texte.maxLength}`;
@@ -178,5 +183,6 @@ export function brancherFormulaireAvis(apresChangement: () => void) {
     formulaire.removeEventListener("change", noter);
     texte?.removeEventListener("input", compter);
     depot?.removeEventListener("toggle", apresChangement);
+    window.removeEventListener("hashchange", ouvrirSiLien);
   };
 }

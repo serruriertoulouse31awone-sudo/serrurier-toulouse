@@ -36,6 +36,11 @@ jobs:
           LFTP_PASSWORD: ${{ secrets.OVH_SFTP_MOT_DE_PASSE }}
           DOSSIER: ${{ vars.OVH_DOSSIER || 'www' }}
         run: |
+          # Tant que les secrets ne sont pas créés (réservé au propriétaire du dépôt), on construit sans déployer.
+          if [ -z "$HOTE" ] || [ -z "$UTILISATEUR" ] || [ -z "$LFTP_PASSWORD" ]; then
+            echo "::notice::Secrets OVH absents : site construit, rien d'envoyé (mise en ligne par SFTP depuis le poste de Quentin)."
+            exit 0
+          fi
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
           lftp -c "set sftp:auto-confirm yes; set net:max-retries 2; set net:timeout 30; \
             open --env-password -u \"$UTILISATEUR\" sftp://$HOTE; \
