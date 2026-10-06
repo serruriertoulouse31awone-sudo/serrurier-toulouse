@@ -24,7 +24,7 @@ export function createLocalBusinessJsonLd(location: LocationConfig) {
     name: "Serrurier Toulouse",
     image: absoluteUrl("/images/technicien-serrurier-toulouse.png"),
     url: absoluteUrl(location.url),
-    telephone: "+33676168158",
+    telephone: "+33687520663",
     areaServed: [{ "@type": "City", name: location.city }, ...location.nearbyCities.map((city) => ({ "@type": "City", name: city }))],
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
